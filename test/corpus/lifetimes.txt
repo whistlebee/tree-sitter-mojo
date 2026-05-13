@@ -1,0 +1,23 @@
+================================================================================
+Meta parameter type with origin keyword argument
+================================================================================
+
+fn with_origin_type[origin: Origin[mut=is_mutable]]():
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (subscript
+            value: (identifier)
+            subscript: (keyword_argument
+              name: (identifier)
+              value: (identifier))))))
+    parameters: (parameters)
+    body: (pass_statement)))

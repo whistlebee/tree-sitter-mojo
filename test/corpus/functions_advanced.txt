@@ -1,0 +1,393 @@
+================================================================================
+Function with meta parameters
+================================================================================
+
+def generic[T: Copyable](value: T):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (meta_parameters
+      (meta_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (parameters
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (pass_statement)))
+
+================================================================================
+Function with multiple meta parameters
+================================================================================
+
+def process[T: Copyable, N: Int](data: T):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (meta_parameters
+      (meta_parameter
+        (identifier)
+        (type
+          (identifier)))
+      (meta_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (parameters
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (pass_statement)))
+
+================================================================================
+Function with meta parameter default
+================================================================================
+
+def create[N: Int = 4]():
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (meta_parameters
+      (meta_parameter
+        (identifier)
+        (type
+          (identifier))
+        (integer)))
+    (parameters)
+    (pass_statement)))
+
+================================================================================
+Function with mut argument convention
+================================================================================
+
+def mutate(mut x: Int):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (argument_convention)
+        (identifier)
+        (type
+          (identifier))))
+    (pass_statement)))
+
+================================================================================
+Function with var argument convention
+================================================================================
+
+def take_ownership(var x: String):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (argument_convention)
+        (identifier)
+        (type
+          (identifier))))
+    (pass_statement)))
+
+================================================================================
+Function with out argument convention
+================================================================================
+
+def __init__(out self, value: Int):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (convention_parameter
+        (argument_convention)
+        (identifier))
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (pass_statement)))
+
+================================================================================
+Function with raises effect
+================================================================================
+
+def might_fail() raises:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (function_modifier)
+    (pass_statement)))
+
+================================================================================
+Function with explicit capture list
+================================================================================
+
+def create_closure() {ref x}:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (capture_list
+      (capture_item
+        (capture_binding
+          (capture_convention)
+          (identifier))))
+    (pass_statement)))
+
+================================================================================
+Function with empty capture list and return type
+================================================================================
+
+def add(x: Int, y: Int) {} -> Int:
+    return x + y
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier)))
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (capture_list)
+    (type
+      (identifier))
+    (return_statement
+      (binary_operator
+        (identifier)
+        (identifier)))))
+
+================================================================================
+Function with ABI effect
+================================================================================
+
+def c_add(a: Int32, b: Int32) abi("C") -> Int32:
+    return a + b
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier)))
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (function_modifier
+      (abi_effect
+        (string
+          (string_start)
+          (string_end))))
+    (type
+      (identifier))
+    (return_statement
+      (binary_operator
+        (identifier)
+        (identifier)))))
+
+================================================================================
+Thin function type annotation
+================================================================================
+
+def add_one(value: Int) -> Int:
+    return value + 1
+
+var fn_ptr: def(Int) thin -> Int = add_one
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters
+      (typed_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (type
+      (identifier))
+    (return_statement
+      (binary_operator
+        (identifier)
+        (integer))))
+  (expression_statement
+    (assignment
+      (identifier)
+      (type
+        (function_type
+          (function_type_parameters
+            (type
+              (identifier)))
+          (function_modifier)
+          (type
+            (identifier))))
+      (identifier))))
+
+================================================================================
+Complex function with all beta features
+================================================================================
+
+def process[T: Copyable, N: Int](mut data: T, var buffer: String) raises {mut buffer, read} -> T:
+    return data
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (meta_parameters
+      (meta_parameter
+        (identifier)
+        (type
+          (identifier)))
+      (meta_parameter
+        (identifier)
+        (type
+          (identifier))))
+    (parameters
+      (typed_parameter
+        (argument_convention)
+        (identifier)
+        (type
+          (identifier)))
+      (typed_parameter
+        (argument_convention)
+        (identifier)
+        (type
+          (identifier))))
+    (function_modifier)
+    (capture_list
+      (capture_item
+        (capture_binding
+          (capture_convention)
+          (identifier)))
+      (capture_item
+        (capture_default)))
+    (type
+      (identifier))
+    (return_statement
+      (identifier))))
+
+================================================================================
+Async function
+================================================================================
+
+async def async_operation():
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (pass_statement)))
+
+================================================================================
+Call with compile-time function arguments
+================================================================================
+
+def kernel():
+    pass
+
+def launch(ctx):
+    ctx.enqueue_function[kernel, kernel](grid_dim=1, block_dim=1)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (identifier))
+    body: (expression_statement
+      (call
+        function: (subscript
+          value: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          subscript: (identifier)
+          subscript: (identifier))
+        arguments: (argument_list
+          (keyword_argument
+            name: (identifier)
+            value: (integer))
+          (keyword_argument
+            name: (identifier)
+            value: (integer)))))))
+
+================================================================================
+Method call with compile-time arguments
+================================================================================
+
+def demo(a, c, d):
+    a.b[c](d)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (identifier)
+      (identifier)
+      (identifier))
+    body: (expression_statement
+      (call
+        function: (subscript
+          value: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          subscript: (identifier))
+        arguments: (argument_list
+          (identifier))))))

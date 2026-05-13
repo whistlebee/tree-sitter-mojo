@@ -1,0 +1,211 @@
+================================================================================
+Variable declaration with var keyword and type
+================================================================================
+
+fn test():
+    var x: Int = 10
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))
+        right: (integer)))))
+
+================================================================================
+Variable declaration with var keyword without type
+================================================================================
+
+fn test():
+    var y = 20
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (integer)))))
+
+================================================================================
+Implicit variable declaration (Python-style)
+================================================================================
+
+fn test():
+    z = 30
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (integer)))))
+
+================================================================================
+Compile-time variable with comptime
+================================================================================
+
+fn test():
+    comptime size = 100
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (comptime_declaration
+      name: (identifier)
+      value: (integer))))
+
+================================================================================
+Reference binding with ref
+================================================================================
+
+fn test():
+    var x = 10
+    ref y = x
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (integer)))
+    body: (ref_binding
+      name: (identifier)
+      value: (identifier))))
+
+================================================================================
+Multiple variable declarations
+================================================================================
+
+fn test():
+    var a: Int = 1
+    var b: Float64 = 2.0
+    var c = "hello"
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))
+        right: (integer)))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))
+        right: (float)))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (string
+          (string_start)
+          (string_end))))))
+
+================================================================================
+Struct field declarations with var
+================================================================================
+
+struct Point:
+    var x: Int
+    var y: Int
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))))
+
+================================================================================
+Global variable declarations
+================================================================================
+
+var global_count: Int = 0
+
+fn increment():
+    global_count += 1
+
+--------------------------------------------------------------------------------
+
+(module
+  (expression_statement
+    (assignment
+      left: (identifier)
+      type: (type
+        (identifier))
+      right: (integer)))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (augmented_assignment
+        left: (identifier)
+        right: (integer)))))
+
+================================================================================
+Variable with complex type annotation
+================================================================================
+
+fn test():
+    var vec: SIMD[DType.float32, 4] = SIMD[DType.float32, 4](1.0)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (subscript
+            value: (identifier)
+            subscript: (attribute
+              object: (identifier)
+              attribute: (identifier))
+            subscript: (integer)))
+        right: (call
+          function: (subscript
+            value: (identifier)
+            subscript: (attribute
+              object: (identifier)
+              attribute: (identifier))
+            subscript: (integer))
+          arguments: (argument_list
+            (float)))))))

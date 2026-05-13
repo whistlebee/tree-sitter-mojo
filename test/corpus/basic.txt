@@ -1,0 +1,47 @@
+================================================================================
+Simple fn function
+================================================================================
+
+fn hello():
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (pass_statement)))
+
+================================================================================
+Simple def function
+================================================================================
+
+def greet():
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (pass_statement)))
+
+================================================================================
+Function with typed parameter
+================================================================================
+
+fn add(x: Int):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type (identifier))))
+    body: (pass_statement)))

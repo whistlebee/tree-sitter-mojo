@@ -1,0 +1,160 @@
+================================================================================
+Parameter decorator on if statement
+================================================================================
+
+def main():
+    @parameter
+    if True:
+        print("yes")
+    else:
+        print("no")
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (decorated_definition
+      (decorator
+        (identifier))
+      (if_statement
+        (true)
+        (expression_statement
+          (call
+            (identifier)
+            (argument_list
+              (string
+                (string_start)
+                (string_end)))))
+        (else_clause
+          (expression_statement
+            (call
+              (identifier)
+              (argument_list
+                (string
+                  (string_start)
+                  (string_end))))))))))
+
+================================================================================
+Parameter decorator on for statement
+================================================================================
+
+def main():
+    comptime LIMIT = 4
+    @parameter
+    for i in range(LIMIT):
+        print(i)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (comptime_declaration
+      (identifier)
+      (integer))
+    (decorated_definition
+      (decorator
+        (identifier))
+      (for_statement
+        (identifier)
+        (call
+          (identifier)
+          (argument_list
+            (identifier)))
+        (expression_statement
+          (call
+            (identifier)
+            (argument_list
+              (identifier))))))))
+
+================================================================================
+Compile-time decorator calls
+================================================================================
+
+@always_inline("nodebug")
+fn add(a: Int, b: Int) -> Int:
+    return a + b
+
+@compiler.register("add_vectors_custom")
+struct AddVectorsCustom:
+    @staticmethod
+    fn execute():
+        pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (decorated_definition
+    (decorator
+      (call
+        (identifier)
+        (argument_list
+          (string
+            (string_start)
+            (string_end)))))
+    (function_definition
+      (identifier)
+      (parameters
+        (typed_parameter
+          (identifier)
+          (type
+            (identifier)))
+        (typed_parameter
+          (identifier)
+          (type
+            (identifier))))
+      (type
+        (identifier))
+      (return_statement
+        (binary_operator
+          (identifier)
+          (identifier)))))
+  (decorated_definition
+    (decorator
+      (call
+        (attribute
+          (identifier)
+          (identifier))
+        (argument_list
+          (string
+            (string_start)
+            (string_end)))))
+    (class_definition
+      (identifier)
+      (decorated_definition
+        (decorator
+          (identifier))
+        (function_definition
+          (identifier)
+          (parameters)
+          (pass_statement))))))
+
+================================================================================
+Register passable decorator argument
+================================================================================
+
+@register_passable("trivial")
+struct Pair:
+    var a: Int
+
+--------------------------------------------------------------------------------
+
+(module
+  (decorated_definition
+    (decorator
+      (call
+        (identifier)
+        (argument_list
+          (string
+            (string_start)
+            (string_end)))))
+    (class_definition
+      (identifier)
+      (expression_statement
+        (assignment
+          (identifier)
+          (type
+            (identifier)))))))

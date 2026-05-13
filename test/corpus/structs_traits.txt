@@ -1,0 +1,340 @@
+================================================================================
+Simple struct definition
+================================================================================
+
+struct Point:
+    var x: Int
+    var y: Int
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))))
+
+================================================================================
+Struct with meta parameters (generics)
+================================================================================
+
+struct Array[T: Type, N: Int]:
+    var data: T
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier)))
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))))
+
+================================================================================
+Struct with constructor
+================================================================================
+
+struct Point:
+    var x: Int
+    var y: Int
+    
+    fn __init__(out self, x: Int, y: Int):
+        self.x = x
+        self.y = y
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (convention_parameter
+          convention: (argument_convention)
+          name: (identifier))
+        (typed_parameter
+          name: (identifier)
+          type: (type
+            (identifier)))
+        (typed_parameter
+          name: (identifier)
+          type: (type
+            (identifier))))
+      body: (expression_statement
+        (assignment
+          left: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          right: (identifier)))
+      body: (expression_statement
+        (assignment
+          left: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          right: (identifier))))))
+
+================================================================================
+Struct with method
+================================================================================
+
+struct Point:
+    var x: Int
+    
+    fn distance(self) -> Float64:
+        return sqrt(self.x * self.x)
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (identifier))
+      return_type: (type
+        (identifier))
+      body: (return_statement
+        (call
+          function: (identifier)
+          arguments: (argument_list
+            (binary_operator
+              left: (attribute
+                object: (identifier)
+                attribute: (identifier))
+              right: (attribute
+                object: (identifier)
+                attribute: (identifier)))))))))
+
+================================================================================
+Simple trait definition
+================================================================================
+
+trait Movable:
+    fn move(mut self, dx: Int, dy: Int):
+        pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (convention_parameter
+          convention: (argument_convention)
+          name: (identifier))
+        (typed_parameter
+          name: (identifier)
+          type: (type
+            (identifier)))
+        (typed_parameter
+          name: (identifier)
+          type: (type
+            (identifier))))
+      body: (pass_statement))))
+
+================================================================================
+Struct implementing trait with inheritance syntax
+================================================================================
+
+struct MyType(Movable):
+    var value: Int
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    superclasses: (argument_list
+      (identifier))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))))
+
+================================================================================
+Struct with static method
+================================================================================
+
+struct Math:
+    @staticmethod
+    fn add(x: Int, y: Int) -> Int:
+        return x + y
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (decorated_definition
+      (decorator
+        (identifier))
+      definition: (function_definition
+        name: (identifier)
+        parameters: (parameters
+          (typed_parameter
+            name: (identifier)
+            type: (type
+              (identifier)))
+          (typed_parameter
+            name: (identifier)
+            type: (type
+              (identifier))))
+        return_type: (type
+          (identifier))
+        body: (return_statement
+          (binary_operator
+            left: (identifier)
+            right: (identifier)))))))
+
+================================================================================
+Struct with destructor
+================================================================================
+
+struct Resource:
+    var handle: Int
+    
+    fn __del__(deinit self):
+        print("cleaning up")
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (convention_parameter
+          convention: (argument_convention)
+          name: (identifier)))
+      body: (expression_statement
+        (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))))))
+
+================================================================================
+Struct with multiple methods and fields
+================================================================================
+
+struct Vector[T: Type]:
+    var data: T
+    var size: Int
+    
+    fn __init__(out self):
+        self.size = 0
+    
+    fn append(mut self, value: T):
+        pass
+    
+    fn get(ref[self] self, index: Int) -> ref[self] T:
+        return self.data
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        type: (type
+          (identifier))))
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (convention_parameter
+          convention: (argument_convention)
+          name: (identifier)))
+      body: (expression_statement
+        (assignment
+          left: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          right: (integer))))
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (convention_parameter
+          convention: (argument_convention)
+          name: (identifier))
+        (typed_parameter
+          name: (identifier)
+          type: (type
+            (identifier))))
+      body: (pass_statement))
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (convention_parameter
+          convention: (argument_convention
+            origin: (identifier))
+          name: (identifier))
+        (typed_parameter
+          name: (identifier)
+          type: (type
+            (identifier))))
+      return_type: (type
+        convention: (argument_convention
+          origin: (identifier))
+        (identifier))
+      body: (return_statement
+        (attribute
+          object: (identifier)
+          attribute: (identifier))))))

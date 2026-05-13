@@ -1,0 +1,46 @@
+{
+  "name": "tree-sitter-mojo",
+  "version": "0.1.0",
+  "description": "Mojo grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "mojo",
+    "neovim"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^8.0.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.25.0",
+    "prebuildify": "^6.0.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip",
+    "build": "tree-sitter generate && node-gyp-build",
+    "test": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.mojo",
+      "file-types": [
+        "mojo",
+        "🔥"
+      ],
+      "injection-regex": "mojo"
+    }
+  ]
+}

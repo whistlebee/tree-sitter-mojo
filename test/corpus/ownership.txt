@@ -1,0 +1,199 @@
+================================================================================
+Transfer operator in assignment
+================================================================================
+
+fn test():
+    var x = String("hello")
+    var y = x^
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (transfer_expression
+          value: (identifier))))))
+
+================================================================================
+Transfer operator in function call
+================================================================================
+
+fn consume(var s: String):
+    pass
+
+fn test():
+    var msg = String("test")
+    consume(msg^)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        convention: (argument_convention)
+        name: (identifier)
+        type: (type
+          (identifier))))
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))))
+    body: (expression_statement
+      (call
+        function: (identifier)
+        arguments: (argument_list
+          (transfer_expression
+            value: (identifier)))))))
+
+================================================================================
+Transfer operator with attribute access
+================================================================================
+
+fn test():
+    var obj = MyObject()
+    var field = obj.field^
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (transfer_expression
+          value: (attribute
+            object: (identifier)
+            attribute: (identifier)))))))
+
+================================================================================
+Transfer operator in return statement
+================================================================================
+
+fn create_and_return() -> String:
+    var s = String("data")
+    return s^
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    return_type: (type
+      (identifier))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))))
+    body: (return_statement
+      (transfer_expression
+        value: (identifier)))))
+
+================================================================================
+Transfer operator with subscript
+================================================================================
+
+fn test():
+    var arr = Array[String]()
+    var item = arr[0]^
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (subscript
+            value: (identifier)
+            subscript: (identifier))
+          arguments: (argument_list))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (transfer_expression
+          value: (subscript
+            value: (identifier)
+            subscript: (integer)))))))
+
+================================================================================
+Multiple transfers in one expression
+================================================================================
+
+fn test():
+    var a = String("a")
+    var b = String("b")
+    var pair = (a^, b^)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))))
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (tuple
+          (transfer_expression
+            value: (identifier))
+          (transfer_expression
+            value: (identifier)))))))
