@@ -354,6 +354,7 @@ module.exports = grammar({
 
     if_statement: ($) =>
       seq(
+        optional("comptime"),
         "if",
         field("condition", $.expression),
         ":",
@@ -397,7 +398,7 @@ module.exports = grammar({
 
     for_statement: ($) =>
       seq(
-        optional("async"),
+        optional(choice("async", "comptime")),
         "for",
         field("left", $._left_hand_side),
         "in",
@@ -445,9 +446,9 @@ module.exports = grammar({
 
     with_statement: ($) =>
       seq(
-        optional("async"),
+        optional(choice("async", "comptime")),
         "with",
-        $.with_clause,
+        commaSep1($.with_item),
         ":",
         field("body", $._suite),
       ),
