@@ -14,10 +14,6 @@
       "type": "STRING",
       "value": "comptime"
     },
-    "async_modifier": {
-      "type": "STRING",
-      "value": "async"
-    },
     "_statement": {
       "type": "CHOICE",
       "members": [
@@ -2005,6 +2001,18 @@
     "with_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "async"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "CHOICE",
           "members": [
@@ -5564,18 +5572,6 @@
       "content": {
         "type": "SEQ",
         "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "async"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
           {
             "type": "STRING",
             "value": "for"

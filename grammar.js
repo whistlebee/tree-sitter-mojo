@@ -91,7 +91,6 @@ module.exports = grammar({
 
     // MOJO: Modifiers
     comptime_modifier: ($) => "comptime",
-    async_modifier: ($) => "async",
 
     // ====================
     // Statements
@@ -450,6 +449,7 @@ module.exports = grammar({
 
     with_statement: ($) =>
       seq(
+        optional("async"),
         optional($.comptime_modifier),
         "with",
         commaSep1($.with_item),
@@ -1041,7 +1041,6 @@ module.exports = grammar({
     for_in_clause: ($) =>
       prec.left(
         seq(
-          optional("async"),
           "for",
           field("left", $._left_hand_side),
           "in",

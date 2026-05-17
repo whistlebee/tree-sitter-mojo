@@ -1,0 +1,61 @@
+==================
+async def and fn
+==================
+
+async def foo():
+    pass
+
+async fn bar():
+    pass
+
+---
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (pass_statement)))
+
+==================
+await expression
+==================
+
+async def main():
+    await something()
+
+---
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (await
+        (call
+          function: (identifier)
+          arguments: (argument_list))))))
+
+==================
+async with
+==================
+
+async def main():
+    async with something():
+        pass
+
+---
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (with_statement
+      (with_item
+        value: (call
+          function: (identifier)
+          arguments: (argument_list)))
+      body: (pass_statement))))
