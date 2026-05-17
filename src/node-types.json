@@ -1157,6 +1157,11 @@
     }
   },
   {
+    "type": "comptime_modifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "concatenated_string",
     "named": true,
     "fields": {},
@@ -1649,6 +1654,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comptime_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2001,6 +2016,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comptime_modifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3136,21 +3161,6 @@
     "fields": {}
   },
   {
-    "type": "with_clause",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "with_item",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "with_item",
     "named": true,
     "fields": {
@@ -3194,11 +3204,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "with_clause",
+          "type": "comptime_modifier",
+          "named": true
+        },
+        {
+          "type": "with_item",
           "named": true
         }
       ]

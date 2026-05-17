@@ -48,14 +48,13 @@ comptime with open("foo") as f:
 (module
   (with_statement
     (comptime_modifier)
-    (with_clause
-      (with_item
-        value: (as_pattern
-          (call
-            function: (identifier)
-            arguments: (argument_list
-              (string
-                (string_start)
-                (string_end))))
-          alias: (identifier))))
+    (with_item
+      value: (as_pattern
+        (call
+          function: (identifier)
+          arguments: (argument_list
+            (string
+              (string_start)
+              (string_end))))
+        alias: (identifier)))
     body: (pass_statement)))
