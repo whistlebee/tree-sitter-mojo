@@ -13,6 +13,7 @@ def foo():
     name: (identifier)
     parameters: (parameters)
     body: (for_statement
+      (comptime_modifier)
       left: (identifier)
       right: (call
         function: (identifier)
@@ -31,6 +32,7 @@ comptime if True:
 
 (module
   (if_statement
+    (comptime_modifier)
     condition: (true)
     consequence: (pass_statement)))
 
@@ -45,6 +47,7 @@ comptime with open("foo") as f:
 
 (module
   (with_statement
+    (comptime_modifier)
     (with_clause
       (with_item
         value: (as_pattern
