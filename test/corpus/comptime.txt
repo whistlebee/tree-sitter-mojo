@@ -1,0 +1,58 @@
+================================================================================
+Comptime For
+================================================================================
+
+def foo():
+    comptime for i in range(10):
+        pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (for_statement
+      left: (identifier)
+      right: (call
+        function: (identifier)
+        arguments: (argument_list
+          (integer)))
+      body: (pass_statement))))
+
+================================================================================
+Comptime If
+================================================================================
+
+comptime if True:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (if_statement
+    condition: (true)
+    consequence: (pass_statement)))
+
+================================================================================
+Comptime With
+================================================================================
+
+comptime with open("foo") as f:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (with_statement
+    (with_clause
+      (with_item
+        value: (as_pattern
+          (call
+            function: (identifier)
+            arguments: (argument_list
+              (string
+                (string_start)
+                (string_end))))
+          alias: (identifier))))
+    body: (pass_statement)))
