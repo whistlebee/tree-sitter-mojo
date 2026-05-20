@@ -2641,10 +2641,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "lambda"
-        },
-        {
-          "type": "SYMBOL",
           "name": "primary_expression"
         },
         {
@@ -3464,84 +3460,6 @@
           }
         ]
       }
-    },
-    "lambda": {
-      "type": "PREC",
-      "value": -2,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "lambda"
-          },
-          {
-            "type": "FIELD",
-            "name": "parameters",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "lambda_parameters"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            }
-          },
-          {
-            "type": "STRING",
-            "value": ":"
-          },
-          {
-            "type": "FIELD",
-            "name": "body",
-            "content": {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          }
-        ]
-      }
-    },
-    "lambda_within_for_in_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "lambda"
-        },
-        {
-          "type": "FIELD",
-          "name": "parameters",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "lambda_parameters"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expression_within_for_in_clause"
-          }
-        }
-      ]
     },
     "assignment": {
       "type": "SEQ",
@@ -5651,15 +5569,6 @@
         {
           "type": "SYMBOL",
           "name": "expression"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "lambda_within_for_in_clause"
-          },
-          "named": true,
-          "value": "lambda"
         }
       ]
     },
@@ -6524,10 +6433,6 @@
         }
       ]
     },
-    "lambda_parameters": {
-      "type": "SYMBOL",
-      "name": "_parameters"
-    },
     "list_splat": {
       "type": "SEQ",
       "members": [
@@ -6797,10 +6702,6 @@
         {
           "type": "STRING",
           "value": "is"
-        },
-        {
-          "type": "STRING",
-          "value": "lambda"
         },
         {
           "type": "STRING",

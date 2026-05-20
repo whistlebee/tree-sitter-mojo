@@ -61,7 +61,6 @@
 [
   "async"
   "await"
-  "lambda"
 ] @keyword
 
 [

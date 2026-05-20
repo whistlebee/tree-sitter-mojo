@@ -3,7 +3,6 @@
 
 // Precedence levels - based on Python with Mojo additions
 const PREC = {
-  lambda: -2,
   typed_parameter: -1,
   conditional: -1,
 
@@ -543,7 +542,6 @@ module.exports = grammar({
       choice(
         $.not_operator,
         $.boolean_operator,
-        $.lambda,
         $.primary_expression,
         $.conditional_expression,
         $.named_expression,
@@ -676,25 +674,6 @@ module.exports = grammar({
             ),
           ),
         ),
-      ),
-
-    lambda: ($) =>
-      prec(
-        PREC.lambda,
-        seq(
-          "lambda",
-          field("parameters", optional($.lambda_parameters)),
-          ":",
-          field("body", $.expression),
-        ),
-      ),
-
-    lambda_within_for_in_clause: ($) =>
-      seq(
-        "lambda",
-        field("parameters", optional($.lambda_parameters)),
-        ":",
-        field("body", $._expression_within_for_in_clause),
       ),
 
     assignment: ($) =>
@@ -1052,7 +1031,7 @@ module.exports = grammar({
     if_clause: ($) => seq("if", $.expression),
 
     _expression_within_for_in_clause: ($) =>
-      choice($.expression, alias($.lambda_within_for_in_clause, $.lambda)),
+      choice($.expression),
 
     conditional_expression: ($) =>
       prec.right(
@@ -1205,8 +1184,6 @@ module.exports = grammar({
 
     _parameters: ($) => seq(commaSep1($.parameter), optional(",")),
 
-    lambda_parameters: ($) => $._parameters,
-
     list_splat: ($) => seq("*", $.expression),
 
     dictionary_splat: ($) => seq("**", $.expression),
@@ -1268,7 +1245,6 @@ module.exports = grammar({
         "import",
         "in",
         "is",
-        "lambda",
         "nonlocal",
         "not",
         "or",
