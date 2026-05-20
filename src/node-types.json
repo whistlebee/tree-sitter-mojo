@@ -82,10 +82,6 @@
         "named": true
       },
       {
-        "type": "ref_binding",
-        "named": true
-      },
-      {
         "type": "return_statement",
         "named": true
       },
@@ -193,6 +189,10 @@
       },
       {
         "type": "list_splat_pattern",
+        "named": true
+      },
+      {
+        "type": "ref_pattern",
         "named": true
       },
       {
@@ -2559,23 +2559,9 @@
     }
   },
   {
-    "type": "ref_binding",
+    "type": "ref_pattern",
     "named": true,
     "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "soft_keyword_identifier",
-            "named": true
-          }
-        ]
-      },
       "origin": {
         "multiple": false,
         "required": false,
@@ -2586,12 +2572,12 @@
           }
         ]
       },
-      "value": {
+      "pattern": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "pattern",
             "named": true
           }
         ]

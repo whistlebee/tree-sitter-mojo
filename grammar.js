@@ -118,7 +118,6 @@ module.exports = grammar({
         $.continue_statement,
         $.type_alias_statement,
         $.comptime_declaration, // NEW: Mojo comptime
-        $.ref_binding, // NEW: Mojo ref binding
       ),
 
     // ====================
@@ -311,19 +310,6 @@ module.exports = grammar({
         "comptime",
         field("name", choice($.identifier, $.soft_keyword_identifier)),
         optional(seq("[", commaSep1($.meta_parameter), "]")),
-        "=",
-        field("value", $.expression),
-      ),
-
-    // ====================
-    // MOJO: Reference Binding
-    // ====================
-
-    ref_binding: ($) =>
-      seq(
-        "ref",
-        optional(seq("[", field("origin", $.expression), "]")),
-        field("name", choice($.identifier, $.soft_keyword_identifier)),
         "=",
         field("value", $.expression),
       ),
@@ -841,12 +827,20 @@ module.exports = grammar({
       choice(
         $.identifier,
         $.keyword_identifier,
+        $.ref_pattern,
         $.subscript,
         $.attribute,
         $.list_splat_pattern,
         $.tuple_pattern,
         $.list_pattern,
       ),
+
+    ref_pattern: ($) =>
+      prec(25, seq(
+        "ref",
+        optional(seq("[", field("origin", $.expression), "]")),
+        field("pattern", $.pattern),
+      )),
 
     tuple_pattern: ($) =>
       seq("(", optional(seq(commaSep1($.pattern), optional(","))), ")"),

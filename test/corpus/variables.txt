@@ -90,15 +90,19 @@ fn test():
       (assignment
         left: (identifier)
         right: (integer)))
-    body: (ref_binding
-      name: (identifier)
-      value: (identifier))
-    body: (ref_binding
-      origin: (identifier)
-      name: (identifier)
-      value: (attribute
-        object: (identifier)
-        attribute: (identifier)))))
+    body: (expression_statement
+      (assignment
+        left: (ref_pattern
+          pattern: (identifier))
+        right: (identifier)))
+    body: (expression_statement
+      (assignment
+        left: (ref_pattern
+          origin: (identifier)
+          pattern: (identifier))
+        right: (attribute
+          object: (identifier)
+          attribute: (identifier))))))
 
 ================================================================================
 Multiple variable declarations
@@ -214,5 +218,29 @@ fn test():
               object: (identifier)
               attribute: (identifier))
             subscript: (integer))
-          arguments: (argument_list
+            arguments: (argument_list
             (float)))))))
+
+================================================================================
+For loop with ref pattern
+================================================================================
+
+fn test():
+    for ref x in list:
+        print(x)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (for_statement
+      left: (ref_pattern
+        pattern: (identifier))
+      right: (identifier)
+      body: (expression_statement
+        (call
+          function: (identifier)
+          arguments: (argument_list
+            (identifier)))))))
