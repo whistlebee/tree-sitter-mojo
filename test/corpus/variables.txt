@@ -78,6 +78,7 @@ Reference binding with ref
 fn test():
     var x = 10
     ref y = x
+    ref [f] z = f.val
 
 --------------------------------------------------------------------------------
 
@@ -91,7 +92,13 @@ fn test():
         right: (integer)))
     body: (ref_binding
       name: (identifier)
-      value: (identifier))))
+      value: (identifier))
+    body: (ref_binding
+      origin: (identifier)
+      name: (identifier)
+      value: (attribute
+        object: (identifier)
+        attribute: (identifier)))))
 
 ================================================================================
 Multiple variable declarations

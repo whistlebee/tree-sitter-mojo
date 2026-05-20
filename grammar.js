@@ -322,6 +322,7 @@ module.exports = grammar({
     ref_binding: ($) =>
       seq(
         "ref",
+        optional(seq("[", field("origin", $.expression), "]")),
         field("name", choice($.identifier, $.soft_keyword_identifier)),
         "=",
         field("value", $.expression),
@@ -1251,6 +1252,7 @@ module.exports = grammar({
         "pass",
         "print",
         "raise",
+        "ref", // NEW
         "return",
         "struct", // NEW
         "thin",

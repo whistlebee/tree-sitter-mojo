@@ -1330,6 +1330,35 @@
           "value": "ref"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "["
+                },
+                {
+                  "type": "FIELD",
+                  "name": "origin",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": "]"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "FIELD",
           "name": "name",
           "content": {
@@ -6726,6 +6755,10 @@
         {
           "type": "STRING",
           "value": "raise"
+        },
+        {
+          "type": "STRING",
+          "value": "ref"
         },
         {
           "type": "STRING",
