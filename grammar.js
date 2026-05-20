@@ -284,9 +284,6 @@ module.exports = grammar({
     dictionary_splat_pattern: ($) =>
       seq("**", choice($.identifier, $.soft_keyword_identifier)),
 
-    keyword_separator: ($) => "*",
-    positional_separator: ($) => "/",
-
     // ====================
     // MOJO: Class/Struct/Trait Definition
     // ====================
@@ -333,13 +330,6 @@ module.exports = grammar({
       ),
 
     decorator: ($) => seq("@", $.expression, $._newline),
-
-    _suite: ($) =>
-      choice(
-        alias($._simple_statements, $.block),
-        seq($._indent, repeat1($._statement)),
-        alias($._newline, $.block),
-      ),
 
     if_statement: ($) =>
       seq(
@@ -594,6 +584,7 @@ module.exports = grammar({
       ),
 
     binary_operator: ($) => {
+      /** @type {Array<[any, number, string]>} */
       const table = [
         [prec.left, PREC.plus, "+"],
         [prec.left, PREC.plus, "-"],
@@ -836,11 +827,14 @@ module.exports = grammar({
       ),
 
     ref_pattern: ($) =>
-      prec(25, seq(
-        "ref",
-        optional(seq("[", field("origin", $.expression), "]")),
-        field("pattern", $.pattern),
-      )),
+      prec(
+        25,
+        seq(
+          "ref",
+          optional(seq("[", field("origin", $.expression), "]")),
+          field("pattern", $.pattern),
+        ),
+      ),
 
     tuple_pattern: ($) =>
       seq("(", optional(seq(commaSep1($.pattern), optional(","))), ")"),
@@ -848,17 +842,7 @@ module.exports = grammar({
     list_pattern: ($) =>
       seq("[", optional(seq(commaSep1($.pattern), optional(","))), "]"),
 
-    case_pattern: ($) =>
-      prec(
-        1,
-        choice(
-          alias($._as_pattern, $.as_pattern),
-          $.keyword_pattern,
-          $.splat_pattern,
-          alias($._complex_pattern, $.union_pattern),
-          alias($._simple_pattern, $.case_pattern),
-        ),
-      ),
+    case_pattern: ($) => choice($.pattern, $.splat_pattern),
 
     _simple_pattern: ($) =>
       prec(
@@ -1025,8 +1009,7 @@ module.exports = grammar({
 
     if_clause: ($) => seq("if", $.expression),
 
-    _expression_within_for_in_clause: ($) =>
-      choice($.expression),
+    _expression_within_for_in_clause: ($) => choice($.expression),
 
     conditional_expression: ($) =>
       prec.right(
@@ -1122,7 +1105,7 @@ module.exports = grammar({
       );
     },
 
-    identifier: (_) => /[_\p{XID_Start}][\p{XID_Continue}]*/,
+    identifier: (_) => /[_\p{XID_Start}][\p{XID_Continue}]*/u,
 
     keyword_identifier: ($) =>
       prec(
@@ -1167,17 +1150,12 @@ module.exports = grammar({
 
     dotted_name: ($) => sep1($.identifier, "."),
 
-    // Match statement helpers
-    case_pattern: ($) => choice($.pattern, $.splat_pattern),
-
     _suite: ($) =>
       choice(
         alias($._simple_statements, $.block),
         seq($._indent, repeat($._statement), $._dedent),
         alias($._newline, $.block),
       ),
-
-    _parameters: ($) => seq(commaSep1($.parameter), optional(",")),
 
     list_splat: ($) => seq("*", $.expression),
 

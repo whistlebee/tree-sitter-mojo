@@ -1148,14 +1148,6 @@
         }
       ]
     },
-    "keyword_separator": {
-      "type": "STRING",
-      "value": "*"
-    },
-    "positional_separator": {
-      "type": "STRING",
-      "value": "/"
-    },
     "class_definition": {
       "type": "SEQ",
       "members": [
@@ -1369,49 +1361,6 @@
         {
           "type": "SYMBOL",
           "name": "_newline"
-        }
-      ]
-    },
-    "_suite": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_simple_statements"
-          },
-          "named": true,
-          "value": "block"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_indent"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_statement"
-              }
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_dedent"
-            }
-          ]
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_newline"
-          },
-          "named": true,
-          "value": "block"
         }
       ]
     },
@@ -6179,7 +6128,8 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[_\\p{XID_Start}][\\p{XID_Continue}]*"
+      "value": "[_\\p{XID_Start}][\\p{XID_Continue}]*",
+      "flags": "u"
     },
     "keyword_identifier": {
       "type": "PREC",
@@ -6340,6 +6290,14 @@
         ]
       }
     },
+    "positional_separator": {
+      "type": "STRING",
+      "value": "/"
+    },
+    "keyword_separator": {
+      "type": "STRING",
+      "value": "*"
+    },
     "as_pattern": {
       "type": "PREC_LEFT",
       "value": 0,
@@ -6442,6 +6400,49 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "_suite": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_simple_statements"
+          },
+          "named": true,
+          "value": "block"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_indent"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_statement"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_dedent"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_newline"
+          },
+          "named": true,
+          "value": "block"
         }
       ]
     },
