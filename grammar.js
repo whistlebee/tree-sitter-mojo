@@ -315,6 +315,7 @@ module.exports = grammar({
       seq(
         "comptime",
         field("name", choice($.identifier, $.soft_keyword_identifier)),
+        optional(seq(":", field("type", $.type))),
         optional(seq("[", commaSep1($.meta_parameter), "]")),
         "=",
         field("value", $.expression),

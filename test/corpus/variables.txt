@@ -60,6 +60,7 @@ Compile-time variable with comptime
 
 fn test():
     comptime size = 100
+    comptime MAX_X: Scalar[DType.float32] = 0.7
 
 --------------------------------------------------------------------------------
 
@@ -69,7 +70,16 @@ fn test():
     parameters: (parameters)
     body: (comptime_declaration
       name: (identifier)
-      value: (integer))))
+      value: (integer))
+    body: (comptime_declaration
+      name: (identifier)
+      type: (type
+        (subscript
+          value: (identifier)
+          subscript: (attribute
+            object: (identifier)
+            attribute: (identifier))))
+      value: (float))))
 
 ================================================================================
 Reference binding with ref
