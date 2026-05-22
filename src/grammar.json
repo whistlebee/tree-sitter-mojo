@@ -119,6 +119,10 @@
         {
           "type": "SYMBOL",
           "name": "comptime_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "comptime_assert_statement"
         }
       ]
     },
@@ -393,6 +397,22 @@
           ]
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "where_clause",
+              "content": {
+                "type": "SYMBOL",
+                "name": "where_clause"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": ":"
         },
@@ -402,6 +422,23 @@
           "content": {
             "type": "SYMBOL",
             "name": "_suite"
+          }
+        }
+      ]
+    },
+    "where_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "where"
+        },
+        {
+          "type": "FIELD",
+          "name": "constraint",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
           }
         }
       ]
@@ -485,6 +522,14 @@
               {
                 "type": "SYMBOL",
                 "name": "soft_keyword_identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "list_splat_pattern"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "dictionary_splat_pattern"
               }
             ]
           }
@@ -684,7 +729,7 @@
     },
     "typed_parameter": {
       "type": "PREC",
-      "value": -1,
+      "value": 9,
       "content": {
         "type": "SEQ",
         "members": [
@@ -717,6 +762,14 @@
                 {
                   "type": "SYMBOL",
                   "name": "soft_keyword_identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "list_splat_pattern"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "dictionary_splat_pattern"
                 }
               ]
             }
@@ -794,29 +847,37 @@
           "value": "deinit"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "ref"
-            },
-            {
-              "type": "STRING",
-              "value": "["
-            },
-            {
-              "type": "FIELD",
-              "name": "origin",
-              "content": {
-                "type": "SYMBOL",
-                "name": "expression"
+          "type": "STRING",
+          "value": "ref"
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "ref"
+              },
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "FIELD",
+                "name": "origin",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "expression"
+                }
+              },
+              {
+                "type": "STRING",
+                "value": "]"
               }
-            },
-            {
-              "type": "STRING",
-              "value": "]"
-            }
-          ]
+            ]
+          }
         }
       ]
     },
@@ -1205,6 +1266,22 @@
               "content": {
                 "type": "SYMBOL",
                 "name": "argument_list"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "where_clause",
+              "content": {
+                "type": "SYMBOL",
+                "name": "where_clause"
               }
             },
             {
@@ -2321,6 +2398,58 @@
         }
       ]
     },
+    "comptime_assert_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "comptime"
+                },
+                {
+                  "type": "STRING",
+                  "value": "assert"
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": "__comptime_assert"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
     "expression_statement": {
       "type": "CHOICE",
       "members": [
@@ -2561,10 +2690,6 @@
         {
           "type": "SYMBOL",
           "name": "as_pattern"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "transfer_expression"
         }
       ]
     },
@@ -2592,6 +2717,10 @@
     "primary_expression": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "transfer_expression"
+        },
         {
           "type": "SYMBOL",
           "name": "await"
@@ -3701,8 +3830,17 @@
             "type": "FIELD",
             "name": "attribute",
             "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "string"
+                }
+              ]
             }
           }
         ]
@@ -3923,6 +4061,10 @@
               "name": "expression"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "list_splat"
         },
         {
           "type": "SYMBOL",
@@ -6634,6 +6776,10 @@
         },
         {
           "type": "STRING",
+          "value": "__comptime_assert"
+        },
+        {
+          "type": "STRING",
           "value": "async"
         },
         {
@@ -6766,6 +6912,10 @@
         },
         {
           "type": "STRING",
+          "value": "where"
+        },
+        {
+          "type": "STRING",
           "value": "while"
         },
         {
@@ -6853,6 +7003,20 @@
     [
       "list_splat_pattern",
       "splat_pattern"
+    ],
+    [
+      "transfer_expression",
+      "binary_operator"
+    ],
+    [
+      "transfer_expression",
+      "binary_operator",
+      "unary_operator"
+    ],
+    [
+      "transfer_expression",
+      "binary_operator",
+      "await"
     ]
   ],
   "precedences": [],

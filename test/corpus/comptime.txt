@@ -58,3 +58,25 @@ comptime with open("foo") as f:
               (string_end))))
         alias: (identifier)))
     body: (pass_statement)))
+
+================================================================================
+Comptime Assert
+================================================================================
+
+comptime assert Self.size > 1, "size must be at least 2"
+__comptime_assert cond
+
+--------------------------------------------------------------------------------
+
+(module
+  (comptime_assert_statement
+    (comparison_operator
+      (attribute
+        object: (identifier)
+        attribute: (identifier))
+      (integer))
+    (string
+      (string_start)
+      (string_end)))
+  (comptime_assert_statement
+    (identifier)))

@@ -391,3 +391,112 @@ def demo(a, c, d):
           subscript: (identifier))
         arguments: (argument_list
           (identifier))))))
+
+================================================================================
+Function with where clause
+================================================================================
+
+def process[n: Int](data: SIMD[DType.float32, n]) -> Float32 where (n == 1 or n == 2):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type
+          (subscript
+            value: (identifier)
+            subscript: (attribute
+              object: (identifier)
+              attribute: (identifier))
+            subscript: (identifier)))))
+    return_type: (type
+      (identifier))
+    where_clause: (where_clause
+      constraint: (parenthesized_expression
+        (boolean_operator
+          left: (comparison_operator
+            (identifier)
+            (integer))
+          right: (comparison_operator
+            (identifier)
+            (integer)))))
+    body: (pass_statement)))
+
+================================================================================
+Function with ref argument convention without origin
+================================================================================
+
+def process(ref x: Int):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        convention: (argument_convention)
+        name: (identifier)
+        type: (type
+          (identifier))))
+    body: (pass_statement)))
+
+================================================================================
+Function with variadic splat compile-time and runtime parameters
+================================================================================
+
+def codegen_unreachable[cond: Bool, msg: StaticString, *extra: StaticString]():
+    pass
+
+def print_all[*Ts: Writable](*args: *Ts):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier)))
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier)))
+      (meta_parameter
+        name: (list_splat_pattern
+          (identifier))
+        type: (type
+          (identifier))))
+    parameters: (parameters)
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (list_splat_pattern
+          (identifier))
+        type: (type
+          (identifier))))
+    parameters: (parameters
+      (typed_parameter
+        name: (list_splat_pattern
+          (identifier))
+        type: (type
+          (list_splat
+            (identifier)))))
+    body: (pass_statement)))
+

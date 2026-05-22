@@ -54,6 +54,10 @@
         "named": true
       },
       {
+        "type": "comptime_assert_statement",
+        "named": true
+      },
+      {
         "type": "comptime_declaration",
         "named": true
       },
@@ -117,10 +121,6 @@
       },
       {
         "type": "primary_expression",
-        "named": true
-      },
-      {
-        "type": "transfer_expression",
         "named": true
       }
     ]
@@ -295,6 +295,10 @@
       },
       {
         "type": "subscript",
+        "named": true
+      },
+      {
+        "type": "transfer_expression",
         "named": true
       },
       {
@@ -510,6 +514,10 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -1043,6 +1051,16 @@
             "named": true
           }
         ]
+      },
+      "where_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clause",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -1107,6 +1125,21 @@
       "types": [
         {
           "type": "primary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "comptime_assert_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
           "named": true
         }
       ]
@@ -1824,6 +1857,16 @@
             "named": true
           }
         ]
+      },
+      "where_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clause",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -2323,7 +2366,15 @@
         "required": true,
         "types": [
           {
+            "type": "dictionary_splat_pattern",
+            "named": true
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "list_splat_pattern",
             "named": true
           },
           {
@@ -2915,6 +2966,10 @@
         {
           "type": "function_type",
           "named": true
+        },
+        {
+          "type": "list_splat",
+          "named": true
         }
       ]
     }
@@ -3003,7 +3058,15 @@
         "required": true,
         "types": [
           {
+            "type": "dictionary_splat_pattern",
+            "named": true
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "list_splat_pattern",
             "named": true
           },
           {
@@ -3053,6 +3116,22 @@
           {
             "type": "~",
             "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "where_clause",
+    "named": true,
+    "fields": {
+      "constraint": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
           }
         ]
       }
@@ -3357,6 +3436,10 @@
     "named": false
   },
   {
+    "type": "__comptime_assert",
+    "named": false
+  },
+  {
     "type": "abi",
     "named": false
   },
@@ -3584,6 +3667,10 @@
   },
   {
     "type": "var",
+    "named": false
+  },
+  {
+    "type": "where",
     "named": false
   },
   {

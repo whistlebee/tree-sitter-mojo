@@ -338,3 +338,26 @@ struct Vector[T: Type]:
         (attribute
           object: (identifier)
           attribute: (identifier))))))
+
+================================================================================
+Struct with where clause
+================================================================================
+
+struct MyStruct[T: SomeTrait] where T == Int:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    where_clause: (where_clause
+      constraint: (comparison_operator
+        (identifier)
+        (identifier)))
+    body: (pass_statement)))

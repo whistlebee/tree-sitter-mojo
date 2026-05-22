@@ -48,6 +48,9 @@ module.exports = grammar({
     [$.parameter, $.typed_parameter],
     [$.subscript, $.meta_parameters],
     [$.list_splat_pattern, $.splat_pattern],
+    [$.transfer_expression, $.binary_operator],
+    [$.transfer_expression, $.binary_operator, $.unary_operator],
+    [$.transfer_expression, $.binary_operator, $.await],
   ],
 
   supertypes: ($) => [
@@ -118,6 +121,7 @@ module.exports = grammar({
         $.continue_statement,
         $.type_alias_statement,
         $.comptime_declaration, // NEW: Mojo comptime
+        $.comptime_assert_statement, // NEW: Mojo comptime assert
       ),
 
     // ====================
@@ -166,9 +170,12 @@ module.exports = grammar({
             ),
           ),
         ),
+        optional(field("where_clause", $.where_clause)),
         ":",
         field("body", $._suite),
       ),
+
+    where_clause: ($) => seq("where", field("constraint", $.expression)),
 
     // NEW: Meta parameters for compile-time generics [T: Type, N: Int]
     meta_parameters: ($) =>
@@ -176,7 +183,7 @@ module.exports = grammar({
 
     meta_parameter: ($) =>
       seq(
-        field("name", choice($.identifier, $.soft_keyword_identifier)),
+        field("name", choice($.identifier, $.soft_keyword_identifier, $.list_splat_pattern, $.dictionary_splat_pattern)),
         ":",
         field("type", $.type),
         optional(seq("=", field("default", $.expression))),
@@ -210,10 +217,10 @@ module.exports = grammar({
 
     typed_parameter: ($) =>
       prec(
-        PREC.typed_parameter,
+        PREC.typed_parameter + 10,
         seq(
           optional(field("convention", $.argument_convention)), // NEW: mut, var, etc.
-          field("name", choice($.identifier, $.soft_keyword_identifier)),
+          field("name", choice($.identifier, $.soft_keyword_identifier, $.list_splat_pattern, $.dictionary_splat_pattern)),
           ":",
           field("type", $.type),
         ),
@@ -237,7 +244,8 @@ module.exports = grammar({
         "var",
         "out",
         "deinit",
-        seq("ref", "[", field("origin", $.expression), "]"),
+        "ref",
+        prec(2, seq("ref", "[", field("origin", $.expression), "]")),
       ),
 
     capture_list: ($) =>
@@ -294,6 +302,7 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(field("meta_parameters", $.meta_parameters)), // NEW: generic params
         optional(field("superclasses", $.argument_list)),
+        optional(field("where_clause", $.where_clause)),
         ":",
         field("body", $._suite),
       ),
@@ -476,6 +485,15 @@ module.exports = grammar({
 
     assert_statement: ($) => seq("assert", commaSep1($.expression)),
 
+    comptime_assert_statement: ($) =>
+      seq(
+        choice(
+          seq("comptime", "assert"),
+          "__comptime_assert",
+        ),
+        commaSep1($.expression),
+      ),
+
     expression_statement: ($) =>
       choice(
         $.expression,
@@ -523,7 +541,6 @@ module.exports = grammar({
         $.conditional_expression,
         $.named_expression,
         $.as_pattern,
-        $.transfer_expression, // NEW: ownership transfer
       ),
 
     // NEW: Ownership transfer operator ^
@@ -532,6 +549,7 @@ module.exports = grammar({
 
     primary_expression: ($) =>
       choice(
+        $.transfer_expression, // NEW: ownership transfer
         $.await,
         $.binary_operator,
         $.identifier,
@@ -726,7 +744,7 @@ module.exports = grammar({
         seq(
           field("object", $.primary_expression),
           ".",
-          field("attribute", $.identifier),
+          field("attribute", choice($.identifier, $.string)),
         ),
       ),
 
@@ -769,6 +787,8 @@ module.exports = grammar({
         $.function_type,
         // Type with argument convention (e.g., ref[origin] Type)
         seq(field("convention", $.argument_convention), $.expression),
+        // Variadic splat type (e.g., *Ts)
+        $.list_splat,
         // Regular type expression
         $.expression,
       ),
@@ -1197,6 +1217,7 @@ module.exports = grammar({
         "and",
         "as",
         "assert",
+        "__comptime_assert",
         "async",
         "await",
         "break",
@@ -1230,6 +1251,7 @@ module.exports = grammar({
         "thin",
         "trait", // NEW
         "try",
+        "where", // NEW
         "while",
         "with",
         "yield",

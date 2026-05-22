@@ -39,6 +39,8 @@
   "yield"
   "raise"
   "assert"
+  "__comptime_assert"
+  "where"
 ] @keyword.control
 
 (break_statement) @keyword.control

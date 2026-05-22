@@ -197,3 +197,26 @@ fn test():
             value: (identifier))
           (transfer_expression
             value: (identifier)))))))
+
+================================================================================
+Transfer operator followed by attribute access and call
+================================================================================
+
+fn test():
+    var value = hasher^.finish()
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (identifier)
+        right: (call
+          function: (attribute
+            object: (transfer_expression
+              value: (identifier))
+            attribute: (identifier))
+          arguments: (argument_list))))))
