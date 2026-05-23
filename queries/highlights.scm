@@ -13,7 +13,6 @@
 ] @keyword.function
 
 [
-  "class"
   "struct"
   "trait"
   "__extension"
@@ -115,7 +114,7 @@
     value: (attribute
       attribute: (identifier) @function.method.call)))
 
-(class_definition
+(struct_definition
   name: (identifier) @type)
 
 (extension_definition

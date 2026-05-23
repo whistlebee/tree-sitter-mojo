@@ -122,7 +122,7 @@ struct AddVectorsCustom:
           (string
             (string_start)
             (string_end)))))
-    (class_definition
+    (struct_definition
       (identifier)
       (decorated_definition
         (decorator
@@ -151,7 +151,7 @@ struct Pair:
           (string
             (string_start)
             (string_end)))))
-    (class_definition
+    (struct_definition
       (identifier)
       (expression_statement
         (assignment

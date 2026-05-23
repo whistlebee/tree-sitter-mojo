@@ -155,7 +155,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "class_definition"
+          "name": "struct_definition"
         },
         {
           "type": "SYMBOL",
@@ -1441,24 +1441,15 @@
         }
       ]
     },
-    "class_definition": {
+    "struct_definition": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
           "name": "keyword",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "class"
-              },
-              {
-                "type": "STRING",
-                "value": "struct"
-              }
-            ]
+            "type": "STRING",
+            "value": "struct"
           }
         },
         {
@@ -2067,7 +2058,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "class_definition"
+                "name": "struct_definition"
               },
               {
                 "type": "SYMBOL",
@@ -6398,10 +6389,6 @@
             },
             {
               "type": "STRING",
-              "value": "exec"
-            },
-            {
-              "type": "STRING",
               "value": "async"
             },
             {
@@ -6882,10 +6869,6 @@
         },
         {
           "type": "STRING",
-          "value": "class"
-        },
-        {
-          "type": "STRING",
           "value": "comptime"
         },
         {
@@ -6914,10 +6897,6 @@
         },
         {
           "type": "STRING",
-          "value": "exec"
-        },
-        {
-          "type": "STRING",
           "value": "finally"
         },
         {
@@ -6934,10 +6913,6 @@
         },
         {
           "type": "STRING",
-          "value": "global"
-        },
-        {
-          "type": "STRING",
           "value": "if"
         },
         {
@@ -6951,10 +6926,6 @@
         {
           "type": "STRING",
           "value": "is"
-        },
-        {
-          "type": "STRING",
-          "value": "nonlocal"
         },
         {
           "type": "STRING",

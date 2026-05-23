@@ -9,7 +9,7 @@ struct Point:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     body: (expression_statement
       (assignment
@@ -34,7 +34,7 @@ struct Array[T: Type, N: Int]:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     meta_parameters: (meta_parameters
       (meta_parameter
@@ -67,7 +67,7 @@ struct Point:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     body: (expression_statement
       (assignment
@@ -121,7 +121,7 @@ struct Point:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     body: (expression_statement
       (assignment
@@ -203,7 +203,7 @@ struct MyType(Movable):
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     superclasses: (struct_superclasses
       (identifier))
@@ -226,7 +226,7 @@ struct Math:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     body: (decorated_definition
       (decorator
@@ -262,7 +262,7 @@ struct Resource:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     body: (expression_statement
       (assignment
@@ -304,7 +304,7 @@ struct Vector[T: Type]:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     meta_parameters: (meta_parameters
       (meta_parameter
@@ -376,7 +376,7 @@ struct MyStruct[T: SomeTrait] where T == Int:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     meta_parameters: (meta_parameters
       (meta_parameter
@@ -400,7 +400,7 @@ struct Array:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     (identifier)
     (function_definition
       (identifier)

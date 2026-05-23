@@ -146,7 +146,7 @@ module.exports = grammar({
         $.try_statement,
         $.with_statement,
         $.function_definition,
-        $.class_definition,
+        $.struct_definition,
         $.trait_definition,
         $.extension_definition,
         $.decorated_definition,
@@ -327,9 +327,9 @@ module.exports = grammar({
     // MOJO: Class/Struct/Trait Definition
     // ====================
 
-    class_definition: ($) =>
+    struct_definition: ($) =>
       seq(
-        field("keyword", choice("class", "struct")),
+        field("keyword", "struct"),
         field("name", $.identifier),
         optional(field("meta_parameters", $.meta_parameters)),
         optional(field("superclasses", $.struct_superclasses)),
@@ -428,7 +428,7 @@ module.exports = grammar({
         field(
           "definition",
           choice(
-            $.class_definition,
+            $.struct_definition,
             $.trait_definition,
             $.function_definition,
             $.if_statement,
@@ -1142,7 +1142,7 @@ module.exports = grammar({
     keyword_identifier: ($) =>
       prec(
         -3,
-        alias(choice("print", "exec", "async", "await", "match"), $.identifier),
+        alias(choice("print", "async", "await", "match"), $.identifier),
       ),
 
     soft_keyword_identifier: ($) =>
@@ -1232,7 +1232,6 @@ module.exports = grammar({
         "async",
         "await",
         "break",
-        "class",
         "comptime", // NEW
         "continue",
         "def",
@@ -1240,17 +1239,14 @@ module.exports = grammar({
         "elif",
         "else",
         "except",
-        "exec",
         "finally",
         "fn", // NEW
         "for",
         "from",
-        "global",
         "if",
         "import",
         "in",
         "is",
-        "nonlocal",
         "not",
         "or",
         "pass",

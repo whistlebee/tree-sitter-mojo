@@ -4,10 +4,6 @@
     "named": true,
     "subtypes": [
       {
-        "type": "class_definition",
-        "named": true
-      },
-      {
         "type": "decorated_definition",
         "named": true
       },
@@ -29,6 +25,10 @@
       },
       {
         "type": "mlir_region_statement",
+        "named": true
+      },
+      {
+        "type": "struct_definition",
         "named": true
       },
       {
@@ -921,88 +921,6 @@
     }
   },
   {
-    "type": "class_definition",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ";",
-            "named": false
-          },
-          {
-            "type": "_compound_statement",
-            "named": true
-          },
-          {
-            "type": "_simple_statement",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "keyword": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "class",
-            "named": false
-          },
-          {
-            "type": "struct",
-            "named": false
-          }
-        ]
-      },
-      "meta_parameters": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "meta_parameters",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "superclasses": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "struct_superclasses",
-            "named": true
-          }
-        ]
-      },
-      "where_clause": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "where_clause",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "comparison_operator",
     "named": true,
     "fields": {
@@ -1305,10 +1223,6 @@
             "named": true
           },
           {
-            "type": "class_definition",
-            "named": true
-          },
-          {
             "type": "comptime_declaration",
             "named": true
           },
@@ -1330,6 +1244,10 @@
           },
           {
             "type": "if_statement",
+            "named": true
+          },
+          {
+            "type": "struct_definition",
             "named": true
           },
           {
@@ -2999,6 +2917,84 @@
     }
   },
   {
+    "type": "struct_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "_compound_statement",
+            "named": true
+          },
+          {
+            "type": "_simple_statement",
+            "named": true
+          },
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "struct",
+            "named": false
+          }
+        ]
+      },
+      "meta_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "meta_parameters",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "superclasses": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "struct_superclasses",
+            "named": true
+          }
+        ]
+      },
+      "where_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clause",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "struct_superclasses",
     "named": true,
     "fields": {},
@@ -3848,10 +3844,6 @@
   },
   {
     "type": "capturing",
-    "named": false
-  },
-  {
-    "type": "class",
     "named": false
   },
   {

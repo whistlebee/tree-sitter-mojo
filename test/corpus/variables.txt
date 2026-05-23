@@ -165,7 +165,7 @@ struct Point:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (struct_definition
     name: (identifier)
     body: (expression_statement
       (assignment

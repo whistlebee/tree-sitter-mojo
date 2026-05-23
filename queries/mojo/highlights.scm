@@ -7,7 +7,6 @@
 ] @keyword.function
 
 [
-  "class"
   "struct"
   "trait"
 ] @keyword.type
@@ -80,7 +79,7 @@
 (function_definition
   name: (identifier) @function)
 
-(class_definition
+(struct_definition
   name: (identifier) @type)
 
 (decorator

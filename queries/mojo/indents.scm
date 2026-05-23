@@ -3,7 +3,7 @@
 
 [
   (function_definition)
-  (class_definition)
+  (struct_definition)
   (if_statement)
   (elif_clause)
   (else_clause)
