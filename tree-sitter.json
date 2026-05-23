@@ -1,0 +1,21 @@
+{
+  "grammars": [
+    {
+      "name": "mojo",
+      "camelcase": "Mojo",
+      "scope": "source.mojo",
+      "file-types": ["mojo", "🔥"],
+      "injection-regex": "^mojo$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Mojo grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Hyunjin Kim"
+      }
+    ]
+  }
+}

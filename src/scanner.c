@@ -18,7 +18,6 @@ enum TokenType {
   CLOSE_PAREN,
   CLOSE_BRACKET,
   CLOSE_BRACE,
-  EXCEPT,
 };
 
 typedef enum {
@@ -251,7 +250,7 @@ bool tree_sitter_mojo_external_scanner_scan(void *payload, TSLexer *lexer,
       skip(lexer);
     } else if (lexer->lookahead == '#' &&
                (valid_symbols[INDENT] || valid_symbols[DEDENT] ||
-                valid_symbols[NEWLINE] || valid_symbols[EXCEPT])) {
+                valid_symbols[NEWLINE])) {
       // If we haven't found an EOL yet,
       // then this is a comment after an expression:
       //   foo = bar # comment

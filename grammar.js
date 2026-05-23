@@ -77,7 +77,6 @@ module.exports = grammar({
     "]",
     ")",
     "}",
-    "except",
   ],
 
   inline: ($) => [
@@ -497,9 +496,7 @@ module.exports = grammar({
     except_clause: ($) =>
       seq(
         "except",
-        optional(
-          seq($.expression, optional(seq(choice("as", ","), $.expression))),
-        ),
+        optional($.expression),
         ":",
         $._suite,
       ),
