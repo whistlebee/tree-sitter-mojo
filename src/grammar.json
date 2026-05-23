@@ -7193,24 +7193,8 @@
       "list_pattern"
     ],
     [
-      "with_item",
-      "_collection_elements"
-    ],
-    [
-      "type_alias_statement",
-      "primary_expression"
-    ],
-    [
       "primary_expression",
       "type"
-    ],
-    [
-      "parameter",
-      "typed_parameter"
-    ],
-    [
-      "subscript",
-      "meta_parameters"
     ],
     [
       "transfer_expression",
@@ -7234,26 +7218,13 @@
       "primary_expression"
     ],
     [
-      "comptime_declaration",
-      "pattern"
-    ],
-    [
       "comptime_member_declaration",
       "pattern"
-    ],
-    [
-      "comptime_member_declaration",
-      "primary_expression"
     ],
     [
       "comptime_declaration",
       "comptime_member_declaration",
       "primary_expression"
-    ],
-    [
-      "comptime_declaration",
-      "comptime_member_declaration",
-      "pattern"
     ],
     [
       "primary_expression",
