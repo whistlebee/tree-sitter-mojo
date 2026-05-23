@@ -48,7 +48,11 @@ module.exports = grammar({
     [$.function_modifier],
     [$.comptime_declaration, $.primary_expression],
     [$.comptime_member_declaration, $.pattern],
-    [$.comptime_declaration, $.comptime_member_declaration, $.primary_expression],
+    [
+      $.comptime_declaration,
+      $.comptime_member_declaration,
+      $.primary_expression,
+    ],
     [$.primary_expression, $.concatenated_string],
     [$.concatenated_string],
     [$.comptime_declaration, $.comptime_member_declaration],
@@ -184,15 +188,40 @@ module.exports = grammar({
         field("body", $._suite),
       ),
 
-    where_clause: ($) => repeat1(seq("where", field("constraint", $.expression))),
+    where_clause: ($) =>
+      repeat1(seq("where", field("constraint", $.expression))),
 
     // NEW: Meta parameters for compile-time generics [T: Type, N: Int]
     meta_parameters: ($) =>
-      seq("[", optional(seq(commaSep1(choice($.meta_parameter, $.keyword_separator, $.positional_separator, $.infer_separator)), optional(","))), "]"),
+      seq(
+        "[",
+        optional(
+          seq(
+            commaSep1(
+              choice(
+                $.meta_parameter,
+                $.keyword_separator,
+                $.positional_separator,
+                $.infer_separator,
+              ),
+            ),
+            optional(","),
+          ),
+        ),
+        "]",
+      ),
 
     meta_parameter: ($) =>
       seq(
-        field("name", choice($.identifier, $.soft_keyword_identifier, $.list_splat_pattern, $.dictionary_splat_pattern)),
+        field(
+          "name",
+          choice(
+            $.identifier,
+            $.soft_keyword_identifier,
+            $.list_splat_pattern,
+            $.dictionary_splat_pattern,
+          ),
+        ),
         optional(seq(":", field("type", $.type))),
         optional(seq("=", field("default", $.expression))),
       ),
@@ -236,7 +265,15 @@ module.exports = grammar({
         PREC.typed_parameter + 10,
         seq(
           optional(field("convention", $.argument_convention)), // NEW: mut, var, etc.
-          field("name", choice($.identifier, $.soft_keyword_identifier, $.list_splat_pattern, $.dictionary_splat_pattern)),
+          field(
+            "name",
+            choice(
+              $.identifier,
+              $.soft_keyword_identifier,
+              $.list_splat_pattern,
+              $.dictionary_splat_pattern,
+            ),
+          ),
           ":",
           field("type", $.type),
         ),
@@ -261,14 +298,17 @@ module.exports = grammar({
         "out",
         "deinit",
         "ref",
-        prec(2, seq(
-          "ref",
-          "[",
-          field("origin", choice($.expression, $.keyword_argument)),
-          repeat(seq(",", choice($.expression, $.keyword_argument))),
-          optional(","),
-          "]"
-        )),
+        prec(
+          2,
+          seq(
+            "ref",
+            "[",
+            field("origin", choice($.expression, $.keyword_argument)),
+            repeat(seq(",", choice($.expression, $.keyword_argument))),
+            optional(","),
+            "]",
+          ),
+        ),
       ),
 
     capture_list: ($) =>
@@ -357,10 +397,7 @@ module.exports = grammar({
           "(",
           optional(
             commaSep1(
-              choice(
-                $.expression,
-                prec(10, seq($.expression, $.where_clause)),
-              ),
+              choice($.expression, prec(10, seq($.expression, $.where_clause))),
             ),
           ),
           optional(","),
@@ -379,7 +416,11 @@ module.exports = grammar({
           field("name", choice($.identifier, $.soft_keyword_identifier)),
           field("meta_parameters", $.meta_parameters),
           choice(
-            seq(":", field("type", $.type), seq("=", field("value", $.expression))),
+            seq(
+              ":",
+              field("type", $.type),
+              seq("=", field("value", $.expression)),
+            ),
             seq("=", field("value", $.expression)),
           ),
         ),
@@ -405,7 +446,11 @@ module.exports = grammar({
         field("name", choice($.identifier, $.soft_keyword_identifier)),
         optional(field("meta_parameters", $.meta_parameters)),
         choice(
-          seq(":", field("type", $.type), optional(seq("=", field("value", $.expression)))),
+          seq(
+            ":",
+            field("type", $.type),
+            optional(seq("=", field("value", $.expression))),
+          ),
           seq("=", field("value", $.expression)),
         ),
       ),
@@ -456,7 +501,6 @@ module.exports = grammar({
 
     else_clause: ($) => seq("else", ":", field("body", $._suite)),
 
-
     for_statement: ($) =>
       seq(
         optional($.comptime_modifier),
@@ -493,13 +537,7 @@ module.exports = grammar({
         ),
       ),
 
-    except_clause: ($) =>
-      seq(
-        "except",
-        optional($.expression),
-        ":",
-        $._suite,
-      ),
+    except_clause: ($) => seq("except", optional($.expression), ":", $._suite),
 
     finally_clause: ($) => seq("finally", ":", $._suite),
 
@@ -561,12 +599,21 @@ module.exports = grammar({
 
     _import_list: ($) =>
       seq(
-        commaSep1(field("name", choice($.dotted_name, $.relative_import, $.aliased_import))),
+        commaSep1(
+          field(
+            "name",
+            choice($.dotted_name, $.relative_import, $.aliased_import),
+          ),
+        ),
         optional(","),
       ),
 
     aliased_import: ($) =>
-      seq(field("name", choice($.dotted_name, $.relative_import)), "as", field("alias", $.identifier)),
+      seq(
+        field("name", choice($.dotted_name, $.relative_import)),
+        "as",
+        field("alias", $.identifier),
+      ),
 
     wildcard_import: ($) => "*",
 
@@ -574,10 +621,7 @@ module.exports = grammar({
 
     comptime_assert_statement: ($) =>
       seq(
-        choice(
-          seq("comptime", "assert"),
-          "__comptime_assert",
-        ),
+        choice(seq("comptime", "assert"), "__comptime_assert"),
         commaSep1($.expression),
       ),
 
@@ -662,7 +706,7 @@ module.exports = grammar({
         $.generator_expression,
         $.ellipsis,
         $.comparison_operator, // Keep here for precedence
-        $.function_type,       // Supported as values/expressions for closures/lambda types
+        $.function_type, // Supported as values/expressions for closures/lambda types
       ),
 
     not_operator: ($) =>
@@ -836,7 +880,12 @@ module.exports = grammar({
               commaSep1(
                 field(
                   "subscript",
-                  choice($.expression, $.slice, $.keyword_argument, $.list_splat),
+                  choice(
+                    $.expression,
+                    $.slice,
+                    $.keyword_argument,
+                    $.list_splat,
+                  ),
                 ),
               ),
               optional(","),
@@ -902,7 +951,24 @@ module.exports = grammar({
       ),
 
     function_type_parameters: ($) =>
-      seq("(", optional(seq(commaSep1(choice($.type, $.typed_parameter, $.positional_separator, $.keyword_separator, $.infer_separator)), optional(","))), ")"),
+      seq(
+        "(",
+        optional(
+          seq(
+            commaSep1(
+              choice(
+                $.type,
+                $.typed_parameter,
+                $.positional_separator,
+                $.keyword_separator,
+                $.infer_separator,
+              ),
+            ),
+            optional(","),
+          ),
+        ),
+        ")",
+      ),
 
     // ====================
     // Literals and Patterns
@@ -940,21 +1006,13 @@ module.exports = grammar({
         ),
       ),
 
-    var_pattern: ($) =>
-      prec(
-        25,
-        seq(
-          "var",
-          field("pattern", $.pattern),
-        ),
-      ),
+    var_pattern: ($) => prec(25, seq("var", field("pattern", $.pattern))),
 
     tuple_pattern: ($) =>
       seq("(", optional(seq(commaSep1($.pattern), optional(","))), ")"),
 
     list_pattern: ($) =>
       seq("[", optional(seq(commaSep1($.pattern), optional(","))), "]"),
-
 
     // Complex literals
     list: ($) => seq("[", optional($._collection_elements), "]"),
@@ -972,7 +1030,11 @@ module.exports = grammar({
       ),
 
     pair: ($) =>
-      seq(field("key", $.expression), choice(":", "="), field("value", $.expression)),
+      seq(
+        field("key", $.expression),
+        choice(":", "="),
+        field("value", $.expression),
+      ),
 
     list_comprehension: ($) =>
       seq("[", field("body", $.expression), $._comprehension_clauses, "]"),
@@ -990,10 +1052,7 @@ module.exports = grammar({
       seq($.for_in_clause, repeat(choice($.for_in_clause, $.if_clause))),
 
     parenthesized_expression: ($) =>
-      prec(
-        PREC.parenthesized_expression,
-        seq("(", $.expression, ")"),
-      ),
+      prec(PREC.parenthesized_expression, seq("(", $.expression, ")")),
 
     _collection_elements: ($) =>
       seq(
@@ -1088,7 +1147,11 @@ module.exports = grammar({
     integer: (_) =>
       token(
         choice(
-          seq(choice("0x", "0X"), /[A-Fa-f0-9]+(_+[A-Fa-f0-9]+)*/, optional(/[Ll]/)),
+          seq(
+            choice("0x", "0X"),
+            /[A-Fa-f0-9]+(_+[A-Fa-f0-9]+)*/,
+            optional(/[Ll]/),
+          ),
           seq(choice("0o", "0O"), /[0-7]+(_+[0-7]+)*/, optional(/[Ll]/)),
           seq(choice("0b", "0B"), /[0-1]+(_+[0-1]+)*/, optional(/[Ll]/)),
           seq(
@@ -1117,13 +1180,11 @@ module.exports = grammar({
       );
     },
 
-    identifier: (_) => token(choice(/[_\p{XID_Start}][\p{XID_Continue}]*/u, /`[^`\r\n]+`/)),
+    identifier: (_) =>
+      token(choice(/[_\p{XID_Start}][\p{XID_Continue}]*/u, /`[^`\r\n]+`/)),
 
     keyword_identifier: ($) =>
-      prec(
-        -3,
-        alias(choice("print", "async", "await", "match"), $.identifier),
-      ),
+      prec(-3, alias(choice("print", "async", "await"), $.identifier)),
 
     soft_keyword_identifier: ($) =>
       prec(
@@ -1241,8 +1302,6 @@ module.exports = grammar({
         "where", // NEW
         "while",
         "with",
-        "match",
-        "case",
         "type",
       ),
 
@@ -1255,7 +1314,8 @@ module.exports = grammar({
         alias($._newline, $.block),
       ),
 
-    _trait_statement: ($) => choice($._trait_simple_statements, $._compound_statement),
+    _trait_statement: ($) =>
+      choice($._trait_simple_statements, $._compound_statement),
 
     _trait_simple_statements: ($) =>
       seq(

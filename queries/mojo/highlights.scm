@@ -1,217 +1,273 @@
-; Neovim fallback query for older installed parser binaries.
-; Uses only conservative node names and standard captures.
+; Catch-all for variables
+(identifier) @variable
 
+; Special backticked identifiers treated as string literals
+((identifier) @string.special
+  (#match? @string.special "^`.*`$"))
+
+; Special variables
+((identifier) @variable.special
+  (#match? @variable.special "^(self|Self)$"))
+
+; Properties (field access)
+(attribute
+  attribute: (identifier) @property)
+
+; Highlight uppercase attribute names as types/constructors
+((attribute
+   attribute: (identifier) @type)
+  (#match? @type "^[A-Z]"))
+
+; Highlight all-caps attribute names as constants (e.g. SWIZZLE_NONE)
+((attribute
+   attribute: (identifier) @constant)
+  (#match? @constant "^_*[A-Z][A-Z\\d_]*$"))
+
+; Type definitions
+(struct_definition
+  name: (identifier) @type)
+
+(trait_definition
+  name: (identifier) @type.interface)
+
+(extension_definition
+  name: (identifier) @type)
+
+; Generic/Compile-time type parameters (e.g. [T: Type])
+(meta_parameter
+  name: (identifier) @type)
+
+; Function definitions
+(function_definition
+  name: (identifier) @function.definition)
+
+; Function calls
+(call
+  function: [
+    (identifier) @function
+    (attribute
+      attribute: (identifier) @function.method)
+  ])
+
+(call
+  function: (subscript
+    value: [
+      (identifier) @function
+      (attribute
+        attribute: (identifier) @function.method)
+    ]))
+
+; Constructor/type instantiation calls starting with uppercase letters
+((call
+   function: (identifier) @type)
+  (#match? @type "^[A-Z]"))
+
+((call
+   function: (subscript
+     value: (identifier) @type))
+  (#match? @type "^[A-Z]"))
+
+((call
+   function: (attribute
+     attribute: (identifier) @type))
+  (#match? @type "^[A-Z]"))
+
+((call
+   function: (subscript
+     value: (attribute
+       attribute: (identifier) @type)))
+  (#match? @type "^[A-Z]"))
+
+; Identifier conventions
+; Assume uppercase names are types/enum-constructors
+((identifier) @type
+  (#match? @type "^[A-Z]"))
+
+; Assume all-caps names are constants
+((identifier) @constant
+  (#match? @constant "^_*[A-Z][A-Z\\d_]*$"))
+
+; Brackets
 [
+  "("
+  ")"
+  "{"
+  "}"
+  "["
+  "]"
+] @punctuation.bracket
+
+; Delimiters
+[
+  "."
+  ";"
+  ","
+  ":"
+] @punctuation.delimiter
+
+; Decorators (highlighted like Rust's attributes)
+"@" @punctuation.special
+
+(decorator
+  (identifier) @attribute)
+
+(decorator
+  (call
+    function: (identifier) @attribute))
+
+; Keywords
+[
+  "as"
+  "async"
+  "comptime"
   "def"
   "fn"
-] @keyword.function
-
-[
+  "import"
+  "from"
   "struct"
   "trait"
-] @keyword.type
+  "type"
+  "var"
+  "ref"
+  "where"
+  "read"
+  "mut"
+  "out"
+  "deinit"
+  "__extension"
+] @keyword
 
+; Control flow keywords
 [
-  "if"
-  "elif"
+  "await"
   "else"
-  "for"
-  "while"
-  "with"
+  "elif"
+  "if"
+  "in"
   "return"
+  "with"
+  "while"
+  "for"
+  "try"
+  "except"
+  "finally"
   "raise"
+  "assert"
+  "__comptime_assert"
 ] @keyword.control
 
 (break_statement) @keyword.control
 (continue_statement) @keyword.control
 (pass_statement) @keyword.control
 
-[
-  "import"
-  "from"
-] @keyword.import
-
-"as" @keyword
-
+; Word operators
 [
   "and"
   "or"
   "not"
-  "in"
   "is"
 ] @keyword.operator
 
+; Literals
 [
-  "var"
-  "ref"
-] @keyword.storage
+  (string)
+  (concatenated_string)
+] @string
+
+(escape_sequence) @string.escape
 
 [
-  "raises"
-  "capturing"
-  "thin"
-] @keyword.modifier
+  (integer)
+  (float)
+] @number
+
+(true) @boolean
+(false) @boolean
+(none) @constant
+
+; Comments
+(comment) @comment
+
+; Symbolic operators
+[
+  "+"
+  "-"
+  "*"
+  "/"
+  "//"
+  "%"
+  "**"
+  "|"
+  "&"
+  "^"
+  "<<"
+  ">>"
+  "@"
+  "+="
+  "-="
+  "*="
+  "/="
+  "//="
+  "%="
+  "**="
+  "<<="
+  ">>="
+  "&="
+  "|="
+  "^="
+  "@="
+  "=="
+  "!="
+  "<"
+  "<="
+  ">"
+  ">="
+  "<>"
+  "->"
+  ":="
+  "="
+] @operator
+
+(unary_operator) @operator
+
+; Ownership transfer operator
+(transfer_expression
+  "^" @operator)
+
+; Parameters
+(typed_parameter
+  name: (identifier) @variable.parameter)
+
+(default_parameter
+  name: (identifier) @variable.parameter)
+
+(typed_default_parameter
+  name: (identifier) @variable.parameter)
+
+(convention_parameter
+  name: (identifier) @variable.parameter)
+
+(parameters
+  (identifier) @variable.parameter)
+
+; Function modifiers/effects
+(function_modifier
+  [
+    "raises"
+    "capturing"
+    "thin"
+    "register_passable"
+  ] @keyword)
 
 (abi_effect
-  "abi" @keyword.modifier)
+  "abi" @keyword)
 
-(capture_default) @keyword.modifier
-(capture_convention) @keyword.modifier
-
-(argument_convention
-  [
-    "read"
-    "mut"
-    "var"
-    "out"
-    "deinit"
-    "ref"
-  ] @keyword.modifier)
-
-"comptime" @keyword.directive
-
-(comment) @comment
-(string) @string
-(escape_sequence) @string.escape
-(integer) @number
-(float) @number.float
-
-(function_definition
-  name: (identifier) @function)
-
-(struct_definition
-  name: (identifier) @type)
-
-(decorator
-  "@" @punctuation.special)
-
-(decorator
-  (expression
-    (identifier) @keyword.directive
-    (#match? @keyword.directive "^(align|always_inline|__copy_capture|deprecated|explicit_destroy|export|fieldwise_init|implicit|no_inline|nonmaterializable|parameter|register_passable|staticmethod)$")))
-
-(decorator
-  (expression
-    (attribute
-      object: (identifier) @module
-      attribute: (identifier) @keyword.directive
-      (#eq? @module "compiler")
-      (#eq? @keyword.directive "register"))))
-
-(decorator
-  (expression
-    (call
-      function: (identifier) @keyword.directive
-      (#match? @keyword.directive "^(align|always_inline|__copy_capture|deprecated|explicit_destroy|export|fieldwise_init|implicit|no_inline|nonmaterializable|parameter|register_passable|staticmethod)$"))))
-
-(decorator
-  (expression
-    (call
-      function: (attribute
-        object: (identifier) @module
-        attribute: (identifier) @keyword.directive
-        (#eq? @module "compiler")
-        (#eq? @keyword.directive "register")))))
-
-(decorator
-  (expression
-    (identifier) @function.decorator
-    (#not-match? @function.decorator "^(align|always_inline|__copy_capture|deprecated|explicit_destroy|export|fieldwise_init|implicit|no_inline|nonmaterializable|parameter|register_passable|staticmethod)$")))
-
-(decorator
-  (expression
-    (attribute
-      object: (identifier) @module
-      attribute: (identifier) @function.decorator
-      (#not-eq? @module "compiler"))))
-
-(decorator
-  (expression
-    (attribute
-      object: (identifier) @module
-      attribute: (identifier) @function.decorator
-      (#eq? @module "compiler")
-      (#not-eq? @function.decorator "register"))))
-
-(decorator
-  (expression
-    (call
-      function: (identifier) @function.decorator
-      (#not-match? @function.decorator "^(align|always_inline|__copy_capture|deprecated|explicit_destroy|export|fieldwise_init|implicit|no_inline|nonmaterializable|parameter|register_passable|staticmethod)$"))))
-
-(decorator
-  (expression
-    (call
-      function: (attribute
-        object: (identifier) @module
-        attribute: (identifier) @function.decorator
-        (#not-eq? @module "compiler")))))
-
-(decorator
-  (expression
-    (call
-      function: (attribute
-        object: (identifier) @module
-        attribute: (identifier) @function.decorator
-        (#eq? @module "compiler")
-        (#not-eq? @function.decorator "register")))))
-
-(call
-  function: (identifier) @function.call)
-
-(call
-  function: (attribute
-    attribute: (identifier) @function.method.call))
-
-(call
-  function: (subscript
-    value: (identifier) @function.call))
-
-(call
-  function: (subscript
-    value: (attribute
-      attribute: (identifier) @function.method.call)))
-
+; Keyword / Label arguments
 (keyword_argument
-  name: (identifier) @label)
+  name: [
+    (identifier)
+    (string)
+  ] @property)
 
 (argument_convention
   (identifier) @label)
-
-(attribute
-  attribute: (identifier) @property)
-
-; Re-apply call captures after the generic property rule so subscripted
-; compile-time call targets like `a.b[c](d)` still color `b` as a method call.
-(call
-  function: (attribute
-    attribute: (identifier) @function.method.call))
-
-(call
-  function: (subscript
-    value: (identifier) @function.call))
-
-(call
-  function: (subscript
-    value: (attribute
-      attribute: (identifier) @function.method.call)))
-
-(assignment
-  "=" @operator)
-
-(augmented_assignment
-  operator: [
-    "+="
-    "-="
-    "*="
-    "/="
-    "//="
-    "%="
-    "**="
-    "<<="
-    ">>="
-    "&="
-    "|="
-    "^="
-    "@="
-  ] @operator)
