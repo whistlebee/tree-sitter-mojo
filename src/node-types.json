@@ -28,10 +28,6 @@
         "named": true
       },
       {
-        "type": "match_statement",
-        "named": true
-      },
-      {
         "type": "mlir_region_statement",
         "named": true
       },
@@ -111,10 +107,6 @@
     "type": "expression",
     "named": true,
     "subtypes": [
-      {
-        "type": "as_pattern",
-        "named": true
-      },
       {
         "type": "boolean_operator",
         "named": true
@@ -454,32 +446,6 @@
     }
   },
   {
-    "type": "as_pattern",
-    "named": true,
-    "fields": {
-      "alias": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "assert_statement",
     "named": true,
     "fields": {},
@@ -794,18 +760,7 @@
   {
     "type": "block",
     "named": true,
-    "fields": {
-      "alternative": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "case_clause",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -960,73 +915,6 @@
       "types": [
         {
           "type": "capture_item",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "case_clause",
-    "named": true,
-    "fields": {
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ";",
-            "named": false
-          },
-          {
-            "type": "_compound_statement",
-            "named": true
-          },
-          {
-            "type": "_simple_statement",
-            "named": true
-          },
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "guard": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "if_clause",
-            "named": true
-          }
-        ]
-      },
-      "pattern": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "case_pattern",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "case_pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "pattern",
-          "named": true
-        },
-        {
-          "type": "splat_pattern",
           "named": true
         }
       ]
@@ -2603,32 +2491,6 @@
     }
   },
   {
-    "type": "match_statement",
-    "named": true,
-    "fields": {
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block",
-            "named": true
-          }
-        ]
-      },
-      "subject": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "meta_parameter",
     "named": true,
     "fields": {
@@ -3096,21 +2958,6 @@
   },
   {
     "type": "soft_keyword_identifier",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "splat_pattern",
     "named": true,
     "fields": {},
     "children": {
@@ -3708,6 +3555,16 @@
     "type": "with_item",
     "named": true,
     "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "pattern",
+            "named": true
+          }
+        ]
+      },
       "value": {
         "multiple": false,
         "required": true,
@@ -3994,10 +3851,6 @@
     "named": false
   },
   {
-    "type": "case",
-    "named": false
-  },
-  {
     "type": "class",
     "named": false
   },
@@ -4098,10 +3951,6 @@
     "type": "line_continuation",
     "named": true,
     "extra": true
-  },
-  {
-    "type": "match",
-    "named": false
   },
   {
     "type": "mut",

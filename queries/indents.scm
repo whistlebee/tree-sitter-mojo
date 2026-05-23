@@ -13,8 +13,6 @@
   (except_clause)
   (finally_clause)
   (with_statement)
-  (match_statement)
-  (case_clause)
 ] @indent.begin
 
 [

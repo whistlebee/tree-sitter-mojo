@@ -8,5 +8,4 @@
   (while_statement)
   (try_statement)
   (with_statement)
-  (match_statement)
 ] @fold

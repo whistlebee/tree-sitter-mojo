@@ -34,8 +34,6 @@
   "except"
   "finally"
   "with"
-  "match"
-  "case"
   "return"
   "yield"
   "raise"
@@ -58,8 +56,6 @@
 (aliased_import
   "as" @keyword.import)
 
-(as_pattern
-  "as" @keyword)
 
 [
   "async"

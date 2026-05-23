@@ -19,8 +19,6 @@
   "for"
   "while"
   "with"
-  "match"
-  "case"
   "return"
   "raise"
 ] @keyword.control

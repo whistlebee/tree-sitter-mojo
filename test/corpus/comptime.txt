@@ -49,14 +49,13 @@ comptime with open("foo") as f:
   (with_statement
     (comptime_modifier)
     (with_item
-      value: (as_pattern
-        (call
-          function: (identifier)
-          arguments: (argument_list
-            (string
-              (string_start)
-              (string_end))))
-        alias: (identifier)))
+      value: (call
+        function: (identifier)
+        arguments: (argument_list
+          (string
+            (string_start)
+            (string_end))))
+      alias: (identifier))
     body: (pass_statement)))
 
 ================================================================================

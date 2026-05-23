@@ -41,16 +41,11 @@ module.exports = grammar({
     [$.tuple, $.tuple_pattern],
     [$.list, $.list_pattern],
     [$.with_item, $._collection_elements],
-    [$.named_expression, $.as_pattern],
     [$.type_alias_statement, $.primary_expression],
-    [$.match_statement, $.primary_expression],
     [$.primary_expression, $.type],
-    [$.type, $.as_pattern],
-    [$.as_pattern, $.list_splat],
     // NEW: Mojo-specific conflicts
     [$.parameter, $.typed_parameter],
     [$.subscript, $.meta_parameters],
-    [$.list_splat_pattern, $.splat_pattern],
     [$.transfer_expression, $.binary_operator],
     [$.transfer_expression, $.binary_operator, $.unary_operator],
     [$.transfer_expression, $.binary_operator, $.await],
@@ -155,7 +150,6 @@ module.exports = grammar({
         $.trait_definition,
         $.extension_definition,
         $.decorated_definition,
-        $.match_statement,
         $.mlir_region_statement,
       ),
 
@@ -470,28 +464,6 @@ module.exports = grammar({
 
     else_clause: ($) => seq("else", ":", field("body", $._suite)),
 
-    match_statement: ($) =>
-      seq(
-        "match",
-        commaSep1(field("subject", $.expression)),
-        ":",
-        field("body", alias($._match_block, $.block)),
-      ),
-
-    _match_block: ($) =>
-      choice(
-        seq($._indent, repeat(field("alternative", $.case_clause)), $._dedent),
-        $._newline,
-      ),
-
-    case_clause: ($) =>
-      seq(
-        "case",
-        commaSep1(field("pattern", $.case_pattern)),
-        optional(field("guard", $.if_clause)),
-        ":",
-        field("consequence", $._suite),
-      ),
 
     for_statement: ($) =>
       seq(
@@ -566,7 +538,14 @@ module.exports = grammar({
         seq("(", commaSep1($.with_item), optional(","), ")"),
       ),
 
-    with_item: ($) => prec.dynamic(1, seq(field("value", $.expression))),
+    with_item: ($) =>
+      prec.dynamic(
+        1,
+        seq(
+          field("value", $.expression),
+          optional(seq("as", field("alias", $.pattern))),
+        ),
+      ),
 
     // ====================
     // Simple Statements (basic implementations)
@@ -658,7 +637,6 @@ module.exports = grammar({
         $.primary_expression,
         $.conditional_expression,
         $.named_expression,
-        $.as_pattern,
       ),
 
     // NEW: Ownership transfer operator ^
@@ -996,107 +974,6 @@ module.exports = grammar({
     list_pattern: ($) =>
       seq("[", optional(seq(commaSep1($.pattern), optional(","))), "]"),
 
-    case_pattern: ($) => choice($.pattern, $.splat_pattern),
-
-    _simple_pattern: ($) =>
-      prec(
-        1,
-        choice(
-          $.class_pattern,
-          $.splat_pattern,
-          $.union_pattern,
-          alias($.list_splat_pattern, $.splat_pattern),
-          $.primary_expression,
-          $.list_pattern,
-          $.tuple_pattern,
-          $.dict_pattern,
-        ),
-      ),
-
-    _as_pattern: ($) =>
-      prec.left(
-        seq(
-          $.case_pattern,
-          "as",
-          field("alias", alias($.expression, $.as_pattern_target)),
-        ),
-      ),
-
-    union_pattern: ($) =>
-      prec.left(seq($.case_pattern, repeat1(seq("|", $.case_pattern)))),
-
-    _complex_pattern: ($) =>
-      prec.left(
-        seq(
-          choice(
-            $.class_pattern,
-            $.primary_expression,
-            alias($._list_pattern, $.list_pattern),
-            alias($._tuple_pattern, $.tuple_pattern),
-            $.dict_pattern,
-            $.keyword_pattern,
-            $.splat_pattern,
-            alias($.list_splat_pattern, $.splat_pattern),
-          ),
-          repeat1(
-            seq(
-              "|",
-              choice(
-                $.class_pattern,
-                $.primary_expression,
-                alias($._list_pattern, $.list_pattern),
-                alias($._tuple_pattern, $.tuple_pattern),
-                $.dict_pattern,
-                $.keyword_pattern,
-                $.splat_pattern,
-                alias($.list_splat_pattern, $.splat_pattern),
-              ),
-            ),
-          ),
-        ),
-      ),
-
-    _list_pattern: ($) =>
-      seq("[", optional(seq(commaSep1($.case_pattern), optional(","))), "]"),
-
-    _tuple_pattern: ($) =>
-      seq("(", optional(seq(commaSep1($.case_pattern), optional(","))), ")"),
-
-    dict_pattern: ($) =>
-      seq(
-        "{",
-        optional(
-          seq(
-            commaSep1(choice($._key_value_pattern, $.splat_pattern)),
-            optional(","),
-          ),
-        ),
-        "}",
-      ),
-
-    _key_value_pattern: ($) =>
-      seq(
-        field("key", choice($.primary_expression, $.keyword)),
-        ":",
-        field("value", $.case_pattern),
-      ),
-
-    keyword_pattern: ($) =>
-      seq(
-        field("name", choice($.identifier, $.keyword_identifier)),
-        "=",
-        field("value", $.case_pattern),
-      ),
-
-    splat_pattern: ($) => seq("*", choice($.identifier, $.keyword_identifier)),
-
-    class_pattern: ($) =>
-      seq(
-        $.primary_expression,
-        "(",
-        optional(seq(commaSep1($.case_pattern), optional(","))),
-        ")",
-      ),
 
     // Complex literals
     list: ($) => seq("[", optional($._collection_elements), "]"),
@@ -1293,8 +1170,6 @@ module.exports = grammar({
     infer_separator: (_) => "//",
 
     // Additional helpers
-    as_pattern: ($) =>
-      prec.left(seq($.expression, "as", field("alias", $.expression))),
 
     expression_list: ($) =>
       prec.right(
