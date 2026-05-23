@@ -460,8 +460,17 @@
                   "type": "SEQ",
                   "members": [
                     {
-                      "type": "SYMBOL",
-                      "name": "meta_parameter"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "meta_parameter"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "keyword_separator"
+                        }
+                      ]
                     },
                     {
                       "type": "REPEAT",
@@ -473,8 +482,17 @@
                             "value": ","
                           },
                           {
-                            "type": "SYMBOL",
-                            "name": "meta_parameter"
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "meta_parameter"
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "keyword_separator"
+                              }
+                            ]
                           }
                         ]
                       }

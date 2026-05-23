@@ -2428,6 +2428,10 @@
       "required": false,
       "types": [
         {
+          "type": "keyword_separator",
+          "named": true
+        },
+        {
           "type": "meta_parameter",
           "named": true
         }
