@@ -2447,6 +2447,10 @@
         {
           "type": "meta_parameter",
           "named": true
+        },
+        {
+          "type": "positional_separator",
+          "named": true
         }
       ]
     }

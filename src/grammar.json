@@ -472,6 +472,10 @@
                         },
                         {
                           "type": "SYMBOL",
+                          "name": "positional_separator"
+                        },
+                        {
+                          "type": "SYMBOL",
                           "name": "infer_separator"
                         }
                       ]
@@ -495,6 +499,10 @@
                               {
                                 "type": "SYMBOL",
                                 "name": "keyword_separator"
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "positional_separator"
                               },
                               {
                                 "type": "SYMBOL",

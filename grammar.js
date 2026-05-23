@@ -179,7 +179,7 @@ module.exports = grammar({
 
     // NEW: Meta parameters for compile-time generics [T: Type, N: Int]
     meta_parameters: ($) =>
-      seq("[", optional(seq(commaSep1(choice($.meta_parameter, $.keyword_separator, $.infer_separator)), optional(","))), "]"),
+      seq("[", optional(seq(commaSep1(choice($.meta_parameter, $.keyword_separator, $.positional_separator, $.infer_separator)), optional(","))), "]"),
 
     meta_parameter: ($) =>
       seq(
