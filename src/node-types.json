@@ -146,6 +146,10 @@
         "named": true
       },
       {
+        "type": "infer_separator",
+        "named": true
+      },
+      {
         "type": "keyword_separator",
         "named": true
       },
@@ -2161,6 +2165,11 @@
     }
   },
   {
+    "type": "infer_separator",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "interpolation",
     "named": true,
     "fields": {
@@ -2427,6 +2436,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "infer_separator",
+          "named": true
+        },
         {
           "type": "keyword_separator",
           "named": true
