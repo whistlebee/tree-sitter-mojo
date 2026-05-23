@@ -1128,7 +1128,7 @@ module.exports = grammar({
       );
     },
 
-    identifier: (_) => /[_\p{XID_Start}][\p{XID_Continue}]*/u,
+    identifier: (_) => token(choice(/[_\p{XID_Start}][\p{XID_Continue}]*/u, /`[^`\r\n]+`/)),
 
     keyword_identifier: ($) =>
       prec(

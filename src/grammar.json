@@ -6366,9 +6366,21 @@
       }
     },
     "identifier": {
-      "type": "PATTERN",
-      "value": "[_\\p{XID_Start}][\\p{XID_Continue}]*",
-      "flags": "u"
+      "type": "TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[_\\p{XID_Start}][\\p{XID_Continue}]*",
+            "flags": "u"
+          },
+          {
+            "type": "PATTERN",
+            "value": "`[^`\\r\\n]+`"
+          }
+        ]
+      }
     },
     "keyword_identifier": {
       "type": "PREC",
