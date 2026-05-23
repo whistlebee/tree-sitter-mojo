@@ -155,6 +155,31 @@ struct Pair:
       (identifier)
       (expression_statement
         (assignment
-          (identifier)
+          (var_pattern
+            (identifier))
           (type
             (identifier)))))))
+
+================================================================================
+Decorator with backticked string as keyword argument name
+================================================================================
+
+@__llvm_metadata(`nvvm.cluster_dim` = cluster_shape)
+fn foo():
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (decorated_definition
+    (decorator
+      (call
+        (identifier)
+        (argument_list
+          (keyword_argument
+            (identifier)
+            (identifier)))))
+    (function_definition
+      (identifier)
+      (parameters)
+      (pass_statement))))

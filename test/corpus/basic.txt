@@ -43,5 +43,66 @@ fn add(x: Int):
     parameters: (parameters
       (typed_parameter
         name: (identifier)
-        type: (type (identifier))))
+        type: (type
+          (identifier))))
     body: (pass_statement)))
+
+================================================================================
+MLIR region statement
+================================================================================
+
+def test():
+    __mlir_region await_body(hdl: __mlir_type.`!co.routine`):
+        body(hdl)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (mlir_region_statement
+      (identifier)
+      (parameters
+        (typed_parameter
+          (identifier)
+          (type
+            (attribute
+              (identifier)
+              (identifier)))))
+      (expression_statement
+        (call
+          (identifier)
+          (argument_list
+            (identifier)))))))
+
+================================================================================
+Integer and float underscores
+================================================================================
+
+fn test():
+    var x = 1__000
+    var y = 1_000_000
+    var z = 1__000.0__0
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (expression_statement
+      (assignment
+        (var_pattern
+          (identifier))
+        (integer)))
+    (expression_statement
+      (assignment
+        (var_pattern
+          (identifier))
+        (integer)))
+    (expression_statement
+      (assignment
+        (var_pattern
+          (identifier))
+        (float)))))

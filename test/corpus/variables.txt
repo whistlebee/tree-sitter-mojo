@@ -13,7 +13,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))
         right: (integer)))))
@@ -33,7 +34,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (integer)))))
 
 ================================================================================
@@ -69,17 +71,17 @@ fn test():
     name: (identifier)
     parameters: (parameters)
     body: (comptime_declaration
-      name: (identifier)
-      value: (integer))
+      left: (identifier)
+      right: (integer))
     body: (comptime_declaration
-      name: (identifier)
+      left: (identifier)
       type: (type
         (subscript
           value: (identifier)
           subscript: (attribute
             object: (identifier)
             attribute: (identifier))))
-      value: (float))))
+      right: (float))))
 
 ================================================================================
 Reference binding with ref
@@ -98,7 +100,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (integer)))
     body: (expression_statement
       (assignment
@@ -131,19 +134,22 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))
         right: (integer)))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))
         right: (float)))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (string
           (string_start)
           (string_end))))))
@@ -163,12 +169,14 @@ struct Point:
     name: (identifier)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))))
 
@@ -186,7 +194,8 @@ fn increment():
 (module
   (expression_statement
     (assignment
-      left: (identifier)
+      left: (var_pattern
+        pattern: (identifier))
       type: (type
         (identifier))
       right: (integer)))
@@ -213,7 +222,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (subscript
             value: (identifier)
@@ -228,7 +238,7 @@ fn test():
               object: (identifier)
               attribute: (identifier))
             subscript: (integer))
-            arguments: (argument_list
+          arguments: (argument_list
             (float)))))))
 
 ================================================================================
@@ -253,4 +263,86 @@ fn test():
         (call
           function: (identifier)
           arguments: (argument_list
+            (identifier)))))))
+
+================================================================================
+Call expression assignment (reference-returning call)
+================================================================================
+
+fn test():
+    self._tensors._unsafe_ref(i) = tensor
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (expression_statement
+      (assignment
+        (call
+          (attribute
+            (attribute
+              (identifier)
+              (identifier))
+            (identifier))
+          (argument_list
+            (identifier)))
+        (identifier)))))
+
+================================================================================
+Escaped identifiers
+================================================================================
+
+fn test_escaped_identifiers() raises:
+    var `struct` = 10
+    var `my value` = 30
+    assert_equal(`struct`, 10)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (function_modifier)
+    (expression_statement
+      (assignment
+        (var_pattern
+          (identifier))
+        (integer)))
+    (expression_statement
+      (assignment
+        (var_pattern
+          (identifier))
+        (integer)))
+    (expression_statement
+      (call
+        (identifier)
+        (argument_list
+          (identifier)
+          (integer))))))
+
+================================================================================
+For loop with var pattern
+================================================================================
+
+fn test():
+    for var x in y:
+        print(x)
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (for_statement
+      (var_pattern
+        (identifier))
+      (identifier)
+      (expression_statement
+        (call
+          (identifier)
+          (argument_list
             (identifier)))))))

@@ -258,7 +258,8 @@ var fn_ptr: def(Int) thin -> Int = add_one
         (integer))))
   (expression_statement
     (assignment
-      (identifier)
+      (var_pattern
+        (identifier))
       (type
         (function_type
           (function_type_parameters
@@ -500,3 +501,73 @@ def print_all[*Ts: Writable](*args: *Ts):
             (identifier)))))
     body: (pass_statement)))
 
+================================================================================
+Function with raises effect specifying exception type
+================================================================================
+
+def might_fail() raises StopIteration:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    modifiers: (function_modifier
+      (type
+        (identifier)))
+    body: (pass_statement)))
+
+================================================================================
+Function parameter with subscript list splat type
+================================================================================
+
+def format_precompiled(compiled: _PrecompiledEntries[*Ts]):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type
+          (subscript
+            value: (identifier)
+            subscript: (list_splat
+              (identifier))))))
+    body: (pass_statement)))
+
+================================================================================
+Function with register_passable modifier and capture list
+================================================================================
+
+fn test():
+    def shift(x: Int) register_passable {var base} -> Int:
+        pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (function_definition
+      (identifier)
+      (parameters
+        (typed_parameter
+          (identifier)
+          (type
+            (identifier))))
+      (function_modifier)
+      (capture_list
+        (capture_item
+          (capture_binding
+            (capture_convention)
+            (identifier))))
+      (type
+        (identifier))
+      (pass_statement))))

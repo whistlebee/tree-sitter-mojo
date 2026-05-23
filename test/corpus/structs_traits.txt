@@ -13,12 +13,14 @@ struct Point:
     name: (identifier)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))))
 
@@ -45,7 +47,8 @@ struct Array[T: Type, N: Int]:
           (identifier))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))))
 
@@ -68,12 +71,14 @@ struct Point:
     name: (identifier)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (function_definition
@@ -120,7 +125,8 @@ struct Point:
     name: (identifier)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (function_definition
@@ -152,7 +158,7 @@ trait Movable:
 --------------------------------------------------------------------------------
 
 (module
-  (class_definition
+  (trait_definition
     name: (identifier)
     body: (function_definition
       name: (identifier)
@@ -171,6 +177,23 @@ trait Movable:
       body: (pass_statement))))
 
 ================================================================================
+Trait with comptime member requirement
+================================================================================
+
+trait HasStaticValue:
+    comptime STATIC_VALUE: Int
+
+--------------------------------------------------------------------------------
+
+(module
+  (trait_definition
+    name: (identifier)
+    body: (comptime_member_declaration
+      name: (identifier)
+      type: (type
+        (identifier)))))
+
+================================================================================
 Struct implementing trait with inheritance syntax
 ================================================================================
 
@@ -182,11 +205,12 @@ struct MyType(Movable):
 (module
   (class_definition
     name: (identifier)
-    superclasses: (argument_list
+    superclasses: (struct_superclasses
       (identifier))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))))
 
@@ -242,7 +266,8 @@ struct Resource:
     name: (identifier)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (function_definition
@@ -288,12 +313,14 @@ struct Vector[T: Type]:
           (identifier))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         type: (type
           (identifier))))
     body: (function_definition
@@ -361,3 +388,35 @@ struct MyStruct[T: SomeTrait] where T == Int:
         (identifier)
         (identifier)))
     body: (pass_statement)))
+
+================================================================================
+Struct method with multiple ref convention parameters
+================================================================================
+
+struct Array:
+    def unsafe_ptr[origin: Origin, address_space: AddressSpace](ref[origin, address_space] self):
+        pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (class_definition
+    (identifier)
+    (function_definition
+      (identifier)
+      (meta_parameters
+        (meta_parameter
+          (identifier)
+          (type
+            (identifier)))
+        (meta_parameter
+          (identifier)
+          (type
+            (identifier))))
+      (parameters
+        (convention_parameter
+          (argument_convention
+            (identifier)
+            (identifier))
+          (identifier)))
+      (pass_statement))))

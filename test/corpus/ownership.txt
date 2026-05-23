@@ -14,7 +14,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (identifier)
           arguments: (argument_list
@@ -23,7 +24,8 @@ fn test():
               (string_end))))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (transfer_expression
           value: (identifier))))))
 
@@ -55,7 +57,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (identifier)
           arguments: (argument_list
@@ -85,13 +88,15 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (identifier)
           arguments: (argument_list))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (transfer_expression
           value: (attribute
             object: (identifier)
@@ -115,7 +120,8 @@ fn create_and_return() -> String:
       (identifier))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (identifier)
           arguments: (argument_list
@@ -142,7 +148,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (subscript
             value: (identifier)
@@ -150,7 +157,8 @@ fn test():
           arguments: (argument_list))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (transfer_expression
           value: (subscript
             value: (identifier)
@@ -173,7 +181,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (identifier)
           arguments: (argument_list
@@ -182,7 +191,8 @@ fn test():
               (string_end))))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (identifier)
           arguments: (argument_list
@@ -191,7 +201,8 @@ fn test():
               (string_end))))))
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (tuple
           (transfer_expression
             value: (identifier))
@@ -213,7 +224,8 @@ fn test():
     parameters: (parameters)
     body: (expression_statement
       (assignment
-        left: (identifier)
+        left: (var_pattern
+          pattern: (identifier))
         right: (call
           function: (attribute
             object: (transfer_expression

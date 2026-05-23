@@ -16,11 +16,12 @@
   "class"
   "struct"
   "trait"
+  "__extension"
 ] @keyword.type
 
 "comptime" @keyword.directive
 
-(assignment
+(var_pattern
   "var" @keyword.storage)
 
 [
@@ -121,6 +122,9 @@
 (class_definition
   name: (identifier) @type)
 
+(extension_definition
+  name: (identifier) @type)
+
 (type
   (identifier) @type)
 
@@ -156,6 +160,8 @@
 
 (comptime_declaration
   name: (identifier) @variable)
+(comptime_declaration
+  left: (identifier) @variable)
 
 (attribute
   attribute: (identifier) @property)
