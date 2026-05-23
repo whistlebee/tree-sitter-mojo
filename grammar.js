@@ -798,6 +798,7 @@ module.exports = grammar({
       prec.right(
         seq(
           field("keyword", choice("def", "fn")),
+          optional(field("meta_parameters", $.meta_parameters)),
           field("parameters", $.function_type_parameters),
           optional(
             choice(
@@ -821,7 +822,7 @@ module.exports = grammar({
       ),
 
     function_type_parameters: ($) =>
-      seq("(", optional(seq(commaSep1($.type), optional(","))), ")"),
+      seq("(", optional(seq(commaSep1(choice($.type, $.typed_parameter)), optional(","))), ")"),
 
     // ====================
     // Literals and Patterns

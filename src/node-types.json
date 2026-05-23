@@ -1923,6 +1923,16 @@
           }
         ]
       },
+      "meta_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "meta_parameters",
+            "named": true
+          }
+        ]
+      },
       "modifiers": {
         "multiple": true,
         "required": false,
@@ -1965,6 +1975,10 @@
       "types": [
         {
           "type": "type",
+          "named": true
+        },
+        {
+          "type": "typed_parameter",
           "named": true
         }
       ]
