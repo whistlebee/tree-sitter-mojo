@@ -623,6 +623,52 @@
           "value": "capturing"
         },
         {
+          "type": "PREC",
+          "value": 2,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "capturing"
+              },
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "expression"
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": ","
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "expression"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "STRING",
+                "value": "]"
+              }
+            ]
+          }
+        },
+        {
           "type": "SYMBOL",
           "name": "abi_effect"
         }
@@ -2887,6 +2933,10 @@
         {
           "type": "SYMBOL",
           "name": "comparison_operator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function_type"
         }
       ]
     },
@@ -7104,6 +7154,18 @@
     [
       "match_statement",
       "primary_expression"
+    ],
+    [
+      "primary_expression",
+      "type"
+    ],
+    [
+      "type",
+      "as_pattern"
+    ],
+    [
+      "as_pattern",
+      "list_splat"
     ],
     [
       "parameter",

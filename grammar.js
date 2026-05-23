@@ -44,6 +44,9 @@ module.exports = grammar({
     [$.named_expression, $.as_pattern],
     [$.type_alias_statement, $.primary_expression],
     [$.match_statement, $.primary_expression],
+    [$.primary_expression, $.type],
+    [$.type, $.as_pattern],
+    [$.as_pattern, $.list_splat],
     // NEW: Mojo-specific conflicts
     [$.parameter, $.typed_parameter],
     [$.subscript, $.meta_parameters],
@@ -191,7 +194,13 @@ module.exports = grammar({
 
     // Function effects supported by recent Mojo releases plus legacy capturing.
     function_modifier: ($) =>
-      choice("raises", "thin", "capturing", $.abi_effect),
+      choice(
+        "raises",
+        "thin",
+        "capturing",
+        prec(2, seq("capturing", "[", commaSep1($.expression), "]")),
+        $.abi_effect,
+      ),
 
     abi_effect: ($) => seq("abi", "(", $.string, ")"),
 
@@ -578,6 +587,7 @@ module.exports = grammar({
         $.generator_expression,
         $.ellipsis,
         $.comparison_operator, // Keep here for precedence
+        $.function_type,       // Supported as values/expressions for closures/lambda types
       ),
 
     not_operator: ($) =>

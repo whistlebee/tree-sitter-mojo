@@ -258,6 +258,10 @@
         "named": true
       },
       {
+        "type": "function_type",
+        "named": true
+      },
+      {
         "type": "generator_expression",
         "named": true
       },
@@ -1889,11 +1893,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "abi_effect",
+          "named": true
+        },
+        {
+          "type": "expression",
           "named": true
         }
       ]
