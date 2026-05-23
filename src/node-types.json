@@ -501,10 +501,6 @@
           {
             "type": "pattern_list",
             "named": true
-          },
-          {
-            "type": "yield",
-            "named": true
           }
         ]
       },
@@ -648,10 +644,6 @@
           },
           {
             "type": "pattern_list",
-            "named": true
-          },
-          {
-            "type": "yield",
             "named": true
           }
         ]
@@ -1065,10 +1057,6 @@
           },
           {
             "type": "pattern_list",
-            "named": true
-          },
-          {
-            "type": "yield",
             "named": true
           }
         ]
@@ -1742,10 +1730,6 @@
           {
             "type": "pattern_list",
             "named": true
-          },
-          {
-            "type": "yield",
-            "named": true
           }
         ]
       },
@@ -2230,10 +2214,6 @@
           {
             "type": "pattern_list",
             "named": true
-          },
-          {
-            "type": "yield",
-            "named": true
           }
         ]
       },
@@ -2320,10 +2300,6 @@
         },
         {
           "type": "parenthesized_list_splat",
-          "named": true
-        },
-        {
-          "type": "yield",
           "named": true
         }
       ]
@@ -2657,10 +2633,6 @@
         {
           "type": "parenthesized_expression",
           "named": true
-        },
-        {
-          "type": "yield",
-          "named": true
         }
       ]
     }
@@ -2820,10 +2792,6 @@
         },
         {
           "type": "parenthesized_list_splat",
-          "named": true
-        },
-        {
-          "type": "yield",
           "named": true
         }
       ]
@@ -3258,10 +3226,6 @@
         {
           "type": "parenthesized_list_splat",
           "named": true
-        },
-        {
-          "type": "yield",
-          "named": true
         }
       ]
     }
@@ -3610,25 +3574,6 @@
         },
         {
           "type": "with_item",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "yield",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "expression_list",
           "named": true
         }
       ]
@@ -4046,10 +3991,6 @@
   },
   {
     "type": "with",
-    "named": false
-  },
-  {
-    "type": "yield",
     "named": false
   },
   {

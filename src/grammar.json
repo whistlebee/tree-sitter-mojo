@@ -4353,55 +4353,8 @@
         {
           "type": "SYMBOL",
           "name": "pattern_list"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "yield"
         }
       ]
-    },
-    "yield": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "yield"
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "from"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "expression"
-                  }
-                ]
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_expressions"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
     },
     "attribute": {
       "type": "PREC",
@@ -5610,17 +5563,8 @@
             "value": "("
           },
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "expression"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "yield"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "expression"
           },
           {
             "type": "STRING",
@@ -5641,10 +5585,6 @@
                 {
                   "type": "SYMBOL",
                   "name": "expression"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "yield"
                 },
                 {
                   "type": "SYMBOL",
@@ -5675,10 +5615,6 @@
                       {
                         "type": "SYMBOL",
                         "name": "expression"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "yield"
                       },
                       {
                         "type": "SYMBOL",
@@ -5958,10 +5894,6 @@
         {
           "type": "SYMBOL",
           "name": "pattern_list"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "yield"
         }
       ]
     },
@@ -6982,10 +6914,6 @@
         {
           "type": "STRING",
           "value": "with"
-        },
-        {
-          "type": "STRING",
-          "value": "yield"
         },
         {
           "type": "STRING",

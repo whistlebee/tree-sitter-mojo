@@ -816,15 +816,6 @@ module.exports = grammar({
         $.assignment,
         $.augmented_assignment,
         $.pattern_list,
-        $.yield,
-      ),
-
-    yield: ($) =>
-      prec.right(
-        seq(
-          "yield",
-          choice(seq("from", $.expression), optional($._expressions)),
-        ),
       ),
 
     attribute: ($) =>
@@ -1004,7 +995,7 @@ module.exports = grammar({
     parenthesized_expression: ($) =>
       prec(
         PREC.parenthesized_expression,
-        seq("(", choice($.expression, $.yield), ")"),
+        seq("(", $.expression, ")"),
       ),
 
     _collection_elements: ($) =>
@@ -1012,7 +1003,6 @@ module.exports = grammar({
         commaSep1(
           choice(
             $.expression,
-            $.yield,
             $.list_splat,
             $.parenthesized_list_splat,
             $.keyword_argument,
@@ -1062,7 +1052,7 @@ module.exports = grammar({
       ),
 
     _f_expression: ($) =>
-      choice($.expression, $.expression_list, $.pattern_list, $.yield),
+      choice($.expression, $.expression_list, $.pattern_list),
 
     escape_sequence: (_) =>
       token.immediate(
@@ -1254,7 +1244,6 @@ module.exports = grammar({
         "where", // NEW
         "while",
         "with",
-        "yield",
         "match",
         "case",
         "type",
