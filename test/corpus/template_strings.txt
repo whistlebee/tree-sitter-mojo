@@ -1,0 +1,43 @@
+================================================================================
+Template string with single variable interpolation
+================================================================================
+
+print(t"Hello {name}!")
+
+--------------------------------------------------------------------------------
+
+(module
+  (expression_statement
+    (call
+      function: (identifier)
+      arguments: (argument_list
+        (string
+          (string_start)
+          (interpolation
+            expression: (identifier))
+          (string_end))))))
+
+================================================================================
+Format string with expression interpolation
+================================================================================
+
+print(f"Result: {x + 1} is {y.value}!")
+
+--------------------------------------------------------------------------------
+
+(module
+  (expression_statement
+    (call
+      function: (identifier)
+      arguments: (argument_list
+        (string
+          (string_start)
+          (interpolation
+            expression: (binary_operator
+              left: (identifier)
+              right: (integer)))
+          (interpolation
+            expression: (attribute
+              object: (identifier)
+              attribute: (identifier)))
+          (string_end))))))
