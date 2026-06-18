@@ -2,7 +2,7 @@
 Transfer operator in assignment
 ================================================================================
 
-fn test():
+def test():
     var x = String("hello")
     var y = x^
 
@@ -33,10 +33,10 @@ fn test():
 Transfer operator in function call
 ================================================================================
 
-fn consume(var s: String):
+def consume(var s: String):
     pass
 
-fn test():
+def test():
     var msg = String("test")
     consume(msg^)
 
@@ -76,7 +76,7 @@ fn test():
 Transfer operator with attribute access
 ================================================================================
 
-fn test():
+def test():
     var obj = MyObject()
     var field = obj.field^
 
@@ -106,7 +106,7 @@ fn test():
 Transfer operator in return statement
 ================================================================================
 
-fn create_and_return() -> String:
+def create_and_return() -> String:
     var s = String("data")
     return s^
 
@@ -136,7 +136,7 @@ fn create_and_return() -> String:
 Transfer operator with subscript
 ================================================================================
 
-fn test():
+def test():
     var arr = Array[String]()
     var item = arr[0]^
 
@@ -168,7 +168,7 @@ fn test():
 Multiple transfers in one expression
 ================================================================================
 
-fn test():
+def test():
     var a = String("a")
     var b = String("b")
     var pair = (a^, b^)
@@ -213,7 +213,7 @@ fn test():
 Transfer operator followed by attribute access and call
 ================================================================================
 
-fn test():
+def test():
     var value = hasher^.finish()
 
 --------------------------------------------------------------------------------

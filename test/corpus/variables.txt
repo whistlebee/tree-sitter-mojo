@@ -2,7 +2,7 @@
 Variable declaration with var keyword and type
 ================================================================================
 
-fn test():
+def test():
     var x: Int = 10
 
 --------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ fn test():
 Variable declaration with var keyword without type
 ================================================================================
 
-fn test():
+def test():
     var y = 20
 
 --------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ fn test():
 Implicit variable declaration (Python-style)
 ================================================================================
 
-fn test():
+def test():
     z = 30
 
 --------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ fn test():
 Compile-time variable with comptime
 ================================================================================
 
-fn test():
+def test():
     comptime size = 100
     comptime MAX_X: Scalar[DType.float32] = 0.7
 
@@ -87,7 +87,7 @@ fn test():
 Reference binding with ref
 ================================================================================
 
-fn test():
+def test():
     var x = 10
     ref y = x
     ref [f] z = f.val
@@ -121,7 +121,7 @@ fn test():
 Multiple variable declarations
 ================================================================================
 
-fn test():
+def test():
     var a: Int = 1
     var b: Float64 = 2.0
     var c = "hello"
@@ -186,7 +186,7 @@ Global variable declarations
 
 var global_count: Int = 0
 
-fn increment():
+def increment():
     global_count += 1
 
 --------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ fn increment():
 Variable with complex type annotation
 ================================================================================
 
-fn test():
+def test():
     var vec: SIMD[DType.float32, 4] = SIMD[DType.float32, 4](1.0)
 
 --------------------------------------------------------------------------------
@@ -245,7 +245,7 @@ fn test():
 For loop with ref pattern
 ================================================================================
 
-fn test():
+def test():
     for ref x in list:
         print(x)
 
@@ -269,7 +269,7 @@ fn test():
 Call expression assignment (reference-returning call)
 ================================================================================
 
-fn test():
+def test():
     self._tensors._unsafe_ref(i) = tensor
 
 --------------------------------------------------------------------------------
@@ -294,7 +294,7 @@ fn test():
 Escaped identifiers
 ================================================================================
 
-fn test_escaped_identifiers() raises:
+def test_escaped_identifiers() raises:
     var `struct` = 10
     var `my value` = 30
     assert_equal(`struct`, 10)
@@ -327,7 +327,7 @@ fn test_escaped_identifiers() raises:
 For loop with var pattern
 ================================================================================
 
-fn test():
+def test():
     for var x in y:
         print(x)
 

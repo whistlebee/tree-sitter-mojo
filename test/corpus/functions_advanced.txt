@@ -545,7 +545,7 @@ def format_precompiled(compiled: _PrecompiledEntries[*Ts]):
 Function with register_passable modifier and capture list
 ================================================================================
 
-fn test():
+def test():
     def shift(x: Int) register_passable {var base} -> Int:
         pass
 
@@ -571,3 +571,44 @@ fn test():
       (type
         (identifier))
       (pass_statement))))
+
+================================================================================
+Function with parameterized out argument modifier
+================================================================================
+
+def init_mem(out[AddressSpace.GLOBAL] self):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (convention_parameter
+        convention: (argument_convention
+          address_space: (attribute
+            object: (identifier)
+            attribute: (identifier)))
+        name: (identifier)))
+    body: (pass_statement)))
+
+================================================================================
+Function with ref argument convention containing generic address space
+================================================================================
+
+def get_ptr(ref[origin, _] self):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (convention_parameter
+        convention: (argument_convention
+          origin: (identifier)
+          (identifier))
+        name: (identifier)))
+    body: (pass_statement)))

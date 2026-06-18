@@ -75,13 +75,13 @@ Compile-time decorator calls
 ================================================================================
 
 @always_inline("nodebug")
-fn add(a: Int, b: Int) -> Int:
+def add(a: Int, b: Int) -> Int:
     return a + b
 
 @compiler.register("add_vectors_custom")
 struct AddVectorsCustom:
     @staticmethod
-    fn execute():
+    def execute():
         pass
 
 --------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ Decorator with backticked string as keyword argument name
 ================================================================================
 
 @__llvm_metadata(`nvvm.cluster_dim` = cluster_shape)
-fn foo():
+def foo():
     pass
 
 --------------------------------------------------------------------------------

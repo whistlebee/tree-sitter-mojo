@@ -58,6 +58,7 @@ module.exports = grammar({
     [$.comptime_declaration, $.comptime_member_declaration],
     [$.pattern_list],
     [$.primary_expression, $.keyword_argument],
+    [$.ref_pattern, $._collection_elements],
   ],
 
   supertypes: ($) => [
@@ -156,7 +157,7 @@ module.exports = grammar({
     function_definition: ($) =>
       seq(
         optional("async"),
-        field("keyword", choice("def", "fn")), // NEW: fn keyword
+        field("keyword", "def"),
         field("name", $.identifier),
         optional(field("meta_parameters", $.meta_parameters)), // NEW: meta params
         field("parameters", $.parameters),
@@ -309,6 +310,17 @@ module.exports = grammar({
             "]",
           ),
         ),
+        prec(
+          2,
+          seq(
+            "out",
+            "[",
+            field("address_space", choice($.expression, $.keyword_argument)),
+            repeat(seq(",", choice($.expression, $.keyword_argument))),
+            optional(","),
+            "]",
+          ),
+        ),
       ),
 
     capture_list: ($) =>
@@ -419,20 +431,34 @@ module.exports = grammar({
             seq(
               ":",
               field("type", $.type),
+              optional(field("where_clause", $.where_clause)),
               seq("=", field("value", $.expression)),
             ),
-            seq("=", field("value", $.expression)),
+            seq(
+              optional(field("where_clause", $.where_clause)),
+              "=",
+              field("value", $.expression),
+            ),
           ),
         ),
         seq(
           "comptime",
           field("left", $._left_hand_side),
           choice(
-            seq("=", field("right", $._right_hand_side)),
-            seq(":", field("type", $.type)),
+            seq(
+              optional(field("where_clause", $.where_clause)),
+              "=",
+              field("right", $._right_hand_side),
+            ),
             seq(
               ":",
               field("type", $.type),
+              optional(field("where_clause", $.where_clause)),
+            ),
+            seq(
+              ":",
+              field("type", $.type),
+              optional(field("where_clause", $.where_clause)),
               "=",
               field("right", $._right_hand_side),
             ),
@@ -449,9 +475,14 @@ module.exports = grammar({
           seq(
             ":",
             field("type", $.type),
+            optional(field("where_clause", $.where_clause)),
             optional(seq("=", field("value", $.expression))),
           ),
-          seq("=", field("value", $.expression)),
+          seq(
+            optional(field("where_clause", $.where_clause)),
+            "=",
+            field("value", $.expression),
+          ),
         ),
       ),
 
@@ -926,7 +957,7 @@ module.exports = grammar({
     function_type: ($) =>
       prec.right(
         seq(
-          field("keyword", choice("def", "fn")),
+          field("keyword", "def"),
           optional(field("meta_parameters", $.meta_parameters)),
           field("parameters", $.function_type_parameters),
           optional(
@@ -1001,7 +1032,15 @@ module.exports = grammar({
         25,
         seq(
           "ref",
-          optional(seq("[", field("origin", $.expression), "]")),
+          optional(
+            seq(
+              "[",
+              field("origin", choice($.expression, $.keyword_argument)),
+              repeat(seq(",", choice($.expression, $.keyword_argument))),
+              optional(","),
+              "]",
+            ),
+          ),
           field("pattern", $.pattern),
         ),
       ),
@@ -1281,7 +1320,6 @@ module.exports = grammar({
         "else",
         "except",
         "finally",
-        "fn", // NEW
         "for",
         "from",
         "if",

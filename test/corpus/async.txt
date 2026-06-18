@@ -1,11 +1,11 @@
 ==================
-async def and fn
+async def and def
 ==================
 
 async def foo():
     pass
 
-async fn bar():
+async def bar():
     pass
 
 ---

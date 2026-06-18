@@ -384,6 +384,20 @@
     "type": "argument_convention",
     "named": true,
     "fields": {
+      "address_space": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "keyword_argument",
+            "named": true
+          }
+        ]
+      },
       "origin": {
         "multiple": false,
         "required": false,
@@ -1080,6 +1094,16 @@
             "named": true
           }
         ]
+      },
+      "where_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clause",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -1127,6 +1151,16 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "where_clause": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "where_clause",
             "named": true
           }
         ]
@@ -1813,10 +1847,6 @@
           {
             "type": "def",
             "named": false
-          },
-          {
-            "type": "fn",
-            "named": false
           }
         ]
       },
@@ -1925,10 +1955,6 @@
         "types": [
           {
             "type": "def",
-            "named": false
-          },
-          {
-            "type": "fn",
             "named": false
           }
         ]
@@ -2717,6 +2743,10 @@
           {
             "type": "expression",
             "named": true
+          },
+          {
+            "type": "keyword_argument",
+            "named": true
           }
         ]
       },
@@ -2730,6 +2760,20 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "keyword_argument",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3843,10 +3887,6 @@
   {
     "type": "float",
     "named": true
-  },
-  {
-    "type": "fn",
-    "named": false
   },
   {
     "type": "for",

@@ -79,3 +79,54 @@ __comptime_assert cond
       (string_end)))
   (comptime_assert_statement
     (identifier)))
+
+================================================================================
+Comptime alias declaration with trailing where clause
+================================================================================
+
+comptime PositiveOnly[N: Int]: AnyType where N > 0 = Int
+comptime SimpleAlias: AnyType where True = Float
+
+--------------------------------------------------------------------------------
+
+(module
+  (comptime_declaration
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    type: (type
+      (identifier))
+    where_clause: (where_clause
+      constraint: (comparison_operator
+        (identifier)
+        (integer)))
+    value: (identifier))
+  (comptime_declaration
+    left: (identifier)
+    type: (type
+      (identifier))
+    where_clause: (where_clause
+      constraint: (true))
+    right: (identifier)))
+
+================================================================================
+Comptime member declaration with trailing where clause
+================================================================================
+
+trait HasCondStaticValue:
+    comptime STATIC_VALUE: Int where True
+
+--------------------------------------------------------------------------------
+
+(module
+  (trait_definition
+    name: (identifier)
+    body: (comptime_member_declaration
+      name: (identifier)
+      type: (type
+        (identifier))
+      where_clause: (where_clause
+        constraint: (true)))))

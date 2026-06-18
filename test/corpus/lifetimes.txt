@@ -2,7 +2,7 @@
 Meta parameter type with origin keyword argument
 ================================================================================
 
-fn with_origin_type[origin: Origin[mut=is_mutable]]():
+def with_origin_type[origin: Origin[mut=is_mutable]]():
     pass
 
 --------------------------------------------------------------------------------
