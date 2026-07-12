@@ -7,3 +7,5 @@ __pycache__/
 src/parser.c.bak
 src/scanner.c.bak
 parser.dylib
+/.worktree/
+/docs/superpowers/
