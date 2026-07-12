@@ -612,3 +612,149 @@ def get_ptr(ref[origin, _] self):
           (identifier))
         name: (identifier)))
     body: (pass_statement)))
+
+================================================================================
+B2 repeated where clauses and parameterized conventions
+================================================================================
+
+def constrained[T: AnyType](value: T) -> T where True where True:
+    return value
+
+def init_mem[address_space: AddressSpace](out[address_space] self):
+    pass
+
+def get_ptr[origin: Origin, address_space: AddressSpace](ref[origin, address_space] self):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    return_type: (type
+      (identifier))
+    where_clause: (where_clause
+      constraint: (true)
+      constraint: (true))
+    body: (return_statement
+      (identifier)))
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    parameters: (parameters
+      (convention_parameter
+        convention: (argument_convention
+          address_space: (identifier))
+        name: (identifier)))
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier)))
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    parameters: (parameters
+      (convention_parameter
+        convention: (argument_convention
+          origin: (identifier)
+          (identifier))
+        name: (identifier)))
+    body: (pass_statement)))
+
+================================================================================
+B2 bare and typed raises, capturing, thin, and abi effects
+================================================================================
+
+def bare() raises:
+    pass
+
+def typed() raises Error:
+    pass
+
+def accepts_capturing(callback: def(Int) capturing -> Int):
+    pass
+
+def accepts_thin(callback: def(Int) thin -> Int):
+    pass
+
+def c_entry(value: Int32) abi("C") -> Int32:
+    return value
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    modifiers: (function_modifier)
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    modifiers: (function_modifier
+      (type
+        (identifier)))
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type
+          (function_type
+            parameters: (function_type_parameters
+              (type
+                (identifier)))
+            modifiers: (function_modifier)
+            return_type: (type
+              (identifier))))))
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type
+          (function_type
+            parameters: (function_type_parameters
+              (type
+                (identifier)))
+            modifiers: (function_modifier)
+            return_type: (type
+              (identifier))))))
+    body: (pass_statement))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    modifiers: (function_modifier
+      (abi_effect
+        (string
+          (string_start)
+          (string_end))))
+    return_type: (type
+      (identifier))
+    body: (return_statement
+      (identifier))))

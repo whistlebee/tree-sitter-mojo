@@ -3,6 +3,8 @@
 [
   (function_definition)
   (struct_definition)
+  (trait_definition)
+  (extension_definition)
   (if_statement)
   (for_statement)
   (while_statement)

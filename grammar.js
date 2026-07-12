@@ -424,6 +424,12 @@ module.exports = grammar({
     comptime_declaration: ($) =>
       choice(
         seq(
+          "alias",
+          field("left", $._left_hand_side),
+          "=",
+          field("right", $._right_hand_side),
+        ),
+        seq(
           "comptime",
           field("name", choice($.identifier, $.soft_keyword_identifier)),
           field("meta_parameters", $.meta_parameters),

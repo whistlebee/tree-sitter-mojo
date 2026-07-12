@@ -447,3 +447,56 @@ struct ConditionallyLinearType[T: AnyType](ImplicitlyDestructible where conforms
             (identifier)
             (identifier)))))
     body: (pass_statement)))
+
+================================================================================
+B2 trait conformance and extension definition
+================================================================================
+
+trait HasValue:
+    def get(self) -> Int:
+        ...
+
+struct Value(HasValue):
+    var storage: Int
+
+__extension Value:
+    def doubled(self) -> Int:
+        return self.storage * 2
+
+--------------------------------------------------------------------------------
+
+(module
+  (trait_definition
+    name: (identifier)
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (identifier))
+      return_type: (type
+        (identifier))
+      body: (expression_statement
+        (ellipsis))))
+  (struct_definition
+    name: (identifier)
+    superclasses: (struct_superclasses
+      (identifier))
+    body: (expression_statement
+      (assignment
+        left: (var_pattern
+          pattern: (identifier))
+        type: (type
+          (identifier)))))
+  (extension_definition
+    name: (identifier)
+    body: (function_definition
+      name: (identifier)
+      parameters: (parameters
+        (identifier))
+      return_type: (type
+        (identifier))
+      body: (return_statement
+        (binary_operator
+          left: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          right: (integer))))))

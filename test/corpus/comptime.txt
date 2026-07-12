@@ -130,3 +130,54 @@ trait HasCondStaticValue:
         (identifier))
       where_clause: (where_clause
         constraint: (true)))))
+
+================================================================================
+Compiler-accepted b2 comptime declarations and control flow
+================================================================================
+
+comptime WIDTH = 4
+comptime Scalar = Int
+
+def specialize():
+    comptime if WIDTH > 0:
+        comptime for i in range(WIDTH):
+            pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (comptime_declaration
+    left: (identifier)
+    right: (integer))
+  (comptime_declaration
+    left: (identifier)
+    right: (identifier))
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (if_statement
+      (comptime_modifier)
+      condition: (comparison_operator
+        (identifier)
+        (integer))
+      consequence: (for_statement
+        (comptime_modifier)
+        left: (identifier)
+        right: (call
+          function: (identifier)
+          arguments: (argument_list
+            (identifier)))
+        body: (pass_statement)))))
+
+================================================================================
+Compiler-accepted deprecated alias declaration
+================================================================================
+
+alias LegacyInt = Int
+
+--------------------------------------------------------------------------------
+
+(module
+  (comptime_declaration
+    left: (identifier)
+    right: (identifier)))

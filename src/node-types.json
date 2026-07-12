@@ -3808,6 +3808,10 @@
     "named": false
   },
   {
+    "type": "alias",
+    "named": false
+  },
+  {
     "type": "and",
     "named": false
   },

@@ -41,3 +41,75 @@ print(f"Result: {x + 1} is {y.value}!")
               object: (identifier)
               attribute: (identifier)))
           (string_end))))))
+
+================================================================================
+B2 MLIR attributes and template string interpolation
+================================================================================
+
+def describe():
+    var left: __mlir_type.index = __mlir_attr.`40 : index`
+    var right: __mlir_type.index = __mlir_attr.`2 : index`
+    var total = __mlir_op.`index.add`(left, right)
+    comptime label = "MLIR result"
+    print(t"{label}: {Int(mlir_value=total)}")
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    body: (expression_statement
+      (assignment
+        left: (var_pattern
+          pattern: (identifier))
+        type: (type
+          (attribute
+            object: (identifier)
+            attribute: (identifier)))
+        right: (attribute
+          object: (identifier)
+          attribute: (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (var_pattern
+          pattern: (identifier))
+        type: (type
+          (attribute
+            object: (identifier)
+            attribute: (identifier)))
+        right: (attribute
+          object: (identifier)
+          attribute: (identifier))))
+    body: (expression_statement
+      (assignment
+        left: (var_pattern
+          pattern: (identifier))
+        right: (call
+          function: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          arguments: (argument_list
+            (identifier)
+            (identifier)))))
+    body: (comptime_declaration
+      left: (identifier)
+      right: (string
+        (string_start)
+        (string_end)))
+    body: (expression_statement
+      (call
+        function: (identifier)
+        arguments: (argument_list
+          (string
+            (string_start)
+            (interpolation
+              expression: (identifier))
+            (interpolation
+              expression: (call
+                function: (identifier)
+                arguments: (argument_list
+                  (keyword_argument
+                    name: (identifier)
+                    value: (identifier)))))
+            (string_end)))))))

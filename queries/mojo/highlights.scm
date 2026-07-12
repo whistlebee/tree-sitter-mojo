@@ -155,6 +155,7 @@
 [
   "as"
   "async"
+  "alias"
   "comptime"
   "def"
   "import"

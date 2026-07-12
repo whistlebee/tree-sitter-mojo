@@ -232,3 +232,23 @@ def test():
               value: (identifier))
             attribute: (identifier))
           arguments: (argument_list))))))
+
+================================================================================
+B2 move capture
+================================================================================
+
+def move_capture() {var message^}:
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters)
+    captures: (capture_list
+      (capture_item
+        (capture_binding
+          convention: (capture_convention)
+          name: (identifier))))
+    body: (pass_statement)))
