@@ -286,6 +286,10 @@
         "named": true
       },
       {
+        "type": "lambda_expression",
+        "named": true
+      },
+      {
         "type": "list",
         "named": true
       },
@@ -2305,6 +2309,72 @@
     "fields": {}
   },
   {
+    "type": "lambda_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "captures": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "capture_list",
+            "named": true
+          }
+        ]
+      },
+      "meta_parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "meta_parameters",
+            "named": true
+          }
+        ]
+      },
+      "modifiers": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "function_modifier",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "parameters",
+            "named": true
+          }
+        ]
+      },
+      "return_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "list",
     "named": true,
     "fields": {},
@@ -3905,6 +3975,10 @@
     "named": false
   },
   {
+    "type": "imm",
+    "named": false
+  },
+  {
     "type": "import",
     "named": false
   },
@@ -3922,6 +3996,10 @@
   },
   {
     "type": "is not",
+    "named": false
+  },
+  {
+    "type": "lambda",
     "named": false
   },
   {

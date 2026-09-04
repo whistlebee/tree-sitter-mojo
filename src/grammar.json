@@ -1009,6 +1009,10 @@
         },
         {
           "type": "STRING",
+          "value": "imm"
+        },
+        {
+          "type": "STRING",
           "value": "mut"
         },
         {
@@ -1264,6 +1268,10 @@
         },
         {
           "type": "STRING",
+          "value": "imm"
+        },
+        {
+          "type": "STRING",
           "value": "mut"
         },
         {
@@ -1340,6 +1348,10 @@
         {
           "type": "STRING",
           "value": "read"
+        },
+        {
+          "type": "STRING",
+          "value": "imm"
         },
         {
           "type": "STRING",
@@ -3574,6 +3586,10 @@
         {
           "type": "SYMBOL",
           "name": "function_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lambda_expression"
         }
       ]
     },
@@ -5946,6 +5962,115 @@
         ]
       }
     },
+    "lambda_expression": {
+      "type": "PREC_RIGHT",
+      "value": -1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "lambda"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "meta_parameters",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "meta_parameters"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "parameters",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "parameters"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "FIELD",
+              "name": "modifiers",
+              "content": {
+                "type": "SYMBOL",
+                "name": "function_modifier"
+              }
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "captures",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "capture_list"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "->"
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "return_type",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "type"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "STRING",
+            "value": ":"
+          },
+          {
+            "type": "FIELD",
+            "name": "body",
+            "content": {
+              "type": "SYMBOL",
+              "name": "expression"
+            }
+          }
+        ]
+      }
+    },
     "concatenated_string": {
       "type": "SEQ",
       "members": [
@@ -6527,6 +6652,10 @@
             },
             {
               "type": "STRING",
+              "value": "imm"
+            },
+            {
+              "type": "STRING",
               "value": "mut"
             },
             {
@@ -7021,6 +7150,10 @@
         },
         {
           "type": "STRING",
+          "value": "imm"
+        },
+        {
+          "type": "STRING",
           "value": "import"
         },
         {
@@ -7030,6 +7163,10 @@
         {
           "type": "STRING",
           "value": "is"
+        },
+        {
+          "type": "STRING",
+          "value": "lambda"
         },
         {
           "type": "STRING",

@@ -612,3 +612,136 @@ def get_ptr(ref[origin, _] self):
           (identifier))
         name: (identifier)))
     body: (pass_statement)))
+
+================================================================================
+Function with imm argument convention
+================================================================================
+
+def process(imm x: Int):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters
+      (typed_parameter
+        convention: (argument_convention)
+        name: (identifier)
+        type: (type
+          (identifier))))
+    body: (pass_statement)))
+
+================================================================================
+Function with where clause and diagnostic message
+================================================================================
+
+def check[T: AnyType]() where (True, "diagnostic message"):
+    pass
+
+--------------------------------------------------------------------------------
+
+(module
+  (function_definition
+    name: (identifier)
+    meta_parameters: (meta_parameters
+      (meta_parameter
+        name: (identifier)
+        type: (type
+          (identifier))))
+    parameters: (parameters)
+    where_clause: (where_clause
+      constraint: (tuple
+        (true)
+        (string
+          (string_start)
+          (string_end))))
+    body: (pass_statement)))
+
+================================================================================
+Lambda expressions with parameters, return type, and body
+================================================================================
+
+var inc = lambda (x: Int) -> Int: x + 1
+
+--------------------------------------------------------------------------------
+
+(module
+  (expression_statement
+    (assignment
+      left: (var_pattern
+        pattern: (identifier))
+      right: (lambda_expression
+        parameters: (parameters
+          (typed_parameter
+            name: (identifier)
+            type: (type
+              (identifier))))
+        return_type: (type
+          (identifier))
+        body: (binary_operator
+          left: (identifier)
+          right: (integer))))))
+
+================================================================================
+Lambda expressions without parameters
+================================================================================
+
+var f = lambda: None
+var g = lambda -> Int: 42
+
+--------------------------------------------------------------------------------
+
+(module
+  (expression_statement
+    (assignment
+      left: (var_pattern
+        pattern: (identifier))
+      right: (lambda_expression
+        body: (none))))
+  (expression_statement
+    (assignment
+      left: (var_pattern
+        pattern: (identifier))
+      right: (lambda_expression
+        return_type: (type
+          (identifier))
+        body: (integer)))))
+
+================================================================================
+Lambda expression with meta parameters and capture list
+================================================================================
+
+var f = lambda [T: Intable](x: T) {mut list}: list.append(x)
+
+--------------------------------------------------------------------------------
+
+(module
+  (expression_statement
+    (assignment
+      left: (var_pattern
+        pattern: (identifier))
+      right: (lambda_expression
+        meta_parameters: (meta_parameters
+          (meta_parameter
+            name: (identifier)
+            type: (type
+              (identifier))))
+        parameters: (parameters
+          (typed_parameter
+            name: (identifier)
+            type: (type
+              (identifier))))
+        captures: (capture_list
+          (capture_item
+            (capture_binding
+              convention: (capture_convention)
+              name: (identifier))))
+        body: (call
+          function: (attribute
+            object: (identifier)
+            attribute: (identifier))
+          arguments: (argument_list
+            (identifier)))))))
+

@@ -294,6 +294,7 @@ module.exports = grammar({
     argument_convention: ($) =>
       choice(
         "read",
+        "imm",
         "mut",
         "var",
         "out",
@@ -329,7 +330,7 @@ module.exports = grammar({
     capture_item: ($) => choice($.capture_default, $.capture_binding),
 
     capture_default: (_) =>
-      choice("read", "mut", "var", "out", "deinit", "ref"),
+      choice("read", "imm", "mut", "var", "out", "deinit", "ref"),
 
     capture_binding: ($) =>
       seq(
@@ -339,7 +340,7 @@ module.exports = grammar({
       ),
 
     capture_convention: (_) =>
-      choice("read", "mut", "var", "out", "deinit", "ref"),
+      choice("read", "imm", "mut", "var", "out", "deinit", "ref"),
 
     default_parameter: ($) =>
       seq(
@@ -738,6 +739,7 @@ module.exports = grammar({
         $.ellipsis,
         $.comparison_operator, // Keep here for precedence
         $.function_type, // Supported as values/expressions for closures/lambda types
+        $.lambda_expression, // NEW: lambda expression
       ),
 
     not_operator: ($) =>
@@ -1127,6 +1129,21 @@ module.exports = grammar({
         seq($.expression, "if", $.expression, "else", $.expression),
       ),
 
+    lambda_expression: ($) =>
+      prec.right(
+        PREC.conditional,
+        seq(
+          "lambda",
+          optional(field("meta_parameters", $.meta_parameters)),
+          optional(field("parameters", $.parameters)),
+          repeat(field("modifiers", $.function_modifier)),
+          optional(field("captures", $.capture_list)),
+          optional(seq("->", field("return_type", $.type))),
+          ":",
+          field("body", $.expression),
+        ),
+      ),
+
     concatenated_string: ($) => seq($.string, repeat1($.string)),
 
     string: ($) =>
@@ -1229,7 +1246,7 @@ module.exports = grammar({
       prec(
         -3,
         alias(
-          choice("read", "mut", "var", "out", "deinit", "ref"),
+          choice("read", "imm", "mut", "var", "out", "deinit", "ref"),
           $.identifier,
         ),
       ),
@@ -1323,9 +1340,11 @@ module.exports = grammar({
         "for",
         "from",
         "if",
+        "imm", // NEW
         "import",
         "in",
         "is",
+        "lambda", // NEW
         "not",
         "or",
         "pass",
