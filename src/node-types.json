@@ -1835,7 +1835,7 @@
         ]
       },
       "captures": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1895,7 +1895,7 @@
         ]
       },
       "return_type": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -2323,7 +2323,7 @@
         ]
       },
       "captures": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -2363,7 +2363,7 @@
         ]
       },
       "return_type": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {

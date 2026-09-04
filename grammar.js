@@ -21,7 +21,7 @@ const PREC = {
   unary: 20,
   power: 21,
   call: 22,
-  transfer: 23, // NEW: ownership transfer operator ^
+  transfer: 23,
 };
 
 const SEMICOLON = ";";
@@ -41,7 +41,7 @@ module.exports = grammar({
     [$.tuple, $.tuple_pattern],
     [$.list, $.list_pattern],
     [$.primary_expression, $.type],
-    // NEW: Mojo-specific conflicts
+    // Mojo-specific conflicts
     [$.transfer_expression, $.binary_operator],
     [$.transfer_expression, $.binary_operator, $.unary_operator],
     [$.transfer_expression, $.binary_operator, $.await],
@@ -127,8 +127,8 @@ module.exports = grammar({
         $.break_statement,
         $.continue_statement,
         $.type_alias_statement,
-        $.comptime_declaration, // NEW: Mojo comptime
-        $.comptime_assert_statement, // NEW: Mojo comptime assert
+        $.comptime_declaration,
+        $.comptime_assert_statement,
       ),
 
     // ====================
@@ -159,29 +159,13 @@ module.exports = grammar({
         optional("async"),
         field("keyword", "def"),
         field("name", $.identifier),
-        optional(field("meta_parameters", $.meta_parameters)), // NEW: meta params
+        optional(field("meta_parameters", $.meta_parameters)),
         field("parameters", $.parameters),
-        optional(
+        repeat(
           choice(
-            seq(
-              optional(seq("->", field("return_type", $.type))),
-              repeat(field("modifiers", $.function_modifier)),
-              optional(field("captures", $.capture_list)),
-            ),
-            seq(
-              repeat1(field("modifiers", $.function_modifier)),
-              optional(field("captures", $.capture_list)),
-              optional(seq("->", field("return_type", $.type))),
-            ),
-            seq(
-              repeat1(field("modifiers", $.function_modifier)),
-              optional(seq("->", field("return_type", $.type))),
-              optional(field("captures", $.capture_list)),
-            ),
-            seq(
-              field("captures", $.capture_list),
-              optional(seq("->", field("return_type", $.type))),
-            ),
+            seq("->", field("return_type", $.type)),
+            field("modifiers", $.function_modifier),
+            field("captures", $.capture_list),
           ),
         ),
         optional(field("where_clause", $.where_clause)),
@@ -192,7 +176,7 @@ module.exports = grammar({
     where_clause: ($) =>
       repeat1(seq("where", field("constraint", $.expression))),
 
-    // NEW: Meta parameters for compile-time generics [T: Type, N: Int]
+    // Meta parameters for compile-time generics [T: Type, N: Int]
     meta_parameters: ($) =>
       seq(
         "[",
@@ -245,12 +229,12 @@ module.exports = grammar({
 
     _parameters: ($) => seq(commaSep1($.parameter), optional(",")),
 
-    // NEW: Parameter with optional argument convention
+    // Parameter with optional argument convention
     parameter: ($) =>
       choice(
         $.identifier,
         $.typed_parameter,
-        $.convention_parameter, // NEW: for 'out self', 'deinit self', etc.
+        $.convention_parameter,
         $.default_parameter,
         $.typed_default_parameter,
         $.list_splat_pattern,
@@ -265,7 +249,7 @@ module.exports = grammar({
       prec(
         PREC.typed_parameter + 10,
         seq(
-          optional(field("convention", $.argument_convention)), // NEW: mut, var, etc.
+          optional(field("convention", $.argument_convention)),
           field(
             "name",
             choice(
@@ -280,7 +264,7 @@ module.exports = grammar({
         ),
       ),
 
-    // NEW: Parameter with convention but no type (e.g., 'out self')
+    // Parameter with convention but no type (e.g., 'out self')
     convention_parameter: ($) =>
       prec.left(
         PREC.typed_parameter - 1,
@@ -290,7 +274,7 @@ module.exports = grammar({
         ),
       ),
 
-    // NEW: Argument conventions
+    // Argument conventions
     argument_convention: ($) =>
       choice(
         "read",
@@ -353,7 +337,7 @@ module.exports = grammar({
       prec(
         PREC.typed_parameter,
         seq(
-          optional(field("convention", $.argument_convention)), // NEW
+          optional(field("convention", $.argument_convention)),
           field("name", choice($.identifier, $.soft_keyword_identifier)),
           ":",
           field("type", $.type),
@@ -705,13 +689,13 @@ module.exports = grammar({
         $.named_expression,
       ),
 
-    // NEW: Ownership transfer operator ^
+    // Ownership transfer operator ^
     transfer_expression: ($) =>
       prec(PREC.transfer, seq(field("value", $.primary_expression), "^")),
 
     primary_expression: ($) =>
       choice(
-        $.transfer_expression, // NEW: ownership transfer
+        $.transfer_expression,
         $.await,
         $.binary_operator,
         $.identifier,
@@ -739,7 +723,7 @@ module.exports = grammar({
         $.ellipsis,
         $.comparison_operator, // Keep here for precedence
         $.function_type, // Supported as values/expressions for closures/lambda types
-        $.lambda_expression, // NEW: lambda expression
+        $.lambda_expression,
       ),
 
     not_operator: ($) =>
@@ -1136,9 +1120,13 @@ module.exports = grammar({
           "lambda",
           optional(field("meta_parameters", $.meta_parameters)),
           optional(field("parameters", $.parameters)),
-          repeat(field("modifiers", $.function_modifier)),
-          optional(field("captures", $.capture_list)),
-          optional(seq("->", field("return_type", $.type))),
+          repeat(
+            choice(
+              seq("->", field("return_type", $.type)),
+              field("modifiers", $.function_modifier),
+              field("captures", $.capture_list),
+            ),
+          ),
           ":",
           field("body", $.expression),
         ),
@@ -1329,7 +1317,7 @@ module.exports = grammar({
         "async",
         "await",
         "break",
-        "comptime", // NEW
+        "comptime",
         "continue",
         "def",
         "del",
@@ -1340,23 +1328,23 @@ module.exports = grammar({
         "for",
         "from",
         "if",
-        "imm", // NEW
+        "imm",
         "import",
         "in",
         "is",
-        "lambda", // NEW
+        "lambda",
         "not",
         "or",
         "pass",
         "print",
         "raise",
-        "ref", // NEW
+        "ref",
         "return",
-        "struct", // NEW
+        "struct",
         "thin",
-        "trait", // NEW
+        "trait",
         "try",
-        "where", // NEW
+        "where",
         "while",
         "with",
         "type",
