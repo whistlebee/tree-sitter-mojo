@@ -412,19 +412,10 @@ module.exports = grammar({
           "comptime",
           field("name", choice($.identifier, $.soft_keyword_identifier)),
           field("meta_parameters", $.meta_parameters),
-          choice(
-            seq(
-              ":",
-              field("type", $.type),
-              optional(field("where_clause", $.where_clause)),
-              seq("=", field("value", $.expression)),
-            ),
-            seq(
-              optional(field("where_clause", $.where_clause)),
-              "=",
-              field("value", $.expression),
-            ),
-          ),
+          optional(seq(":", field("type", $.type))),
+          optional(field("where_clause", $.where_clause)),
+          "=",
+          field("value", $.expression),
         ),
         seq(
           "comptime",
@@ -439,13 +430,7 @@ module.exports = grammar({
               ":",
               field("type", $.type),
               optional(field("where_clause", $.where_clause)),
-            ),
-            seq(
-              ":",
-              field("type", $.type),
-              optional(field("where_clause", $.where_clause)),
-              "=",
-              field("right", $._right_hand_side),
+              optional(seq("=", field("right", $._right_hand_side))),
             ),
           ),
         ),
@@ -574,12 +559,6 @@ module.exports = grammar({
         field("parameters", optional($.parameters)),
         ":",
         field("body", $._suite),
-      ),
-
-    with_clause: ($) =>
-      choice(
-        seq(commaSep1($.with_item), optional(",")),
-        seq("(", commaSep1($.with_item), optional(","), ")"),
       ),
 
     with_item: ($) =>
@@ -825,12 +804,10 @@ module.exports = grammar({
         field("left", $._left_hand_side),
         choice(
           seq("=", field("right", $._right_hand_side)),
-          seq(":", field("type", $.type)),
           seq(
             ":",
             field("type", $.type),
-            "=",
-            field("right", $._right_hand_side),
+            optional(seq("=", field("right", $._right_hand_side))),
           ),
         ),
       ),
@@ -946,22 +923,11 @@ module.exports = grammar({
           field("keyword", "def"),
           optional(field("meta_parameters", $.meta_parameters)),
           field("parameters", $.function_type_parameters),
-          optional(
+          repeat(
             choice(
-              seq(
-                optional(seq("->", field("return_type", $.type))),
-                repeat(field("modifiers", $.function_modifier)),
-                optional(field("captures", $.capture_list)),
-              ),
-              seq(
-                repeat1(field("modifiers", $.function_modifier)),
-                optional(field("captures", $.capture_list)),
-                optional(seq("->", field("return_type", $.type))),
-              ),
-              seq(
-                field("captures", $.capture_list),
-                optional(seq("->", field("return_type", $.type))),
-              ),
+              seq("->", field("return_type", $.type)),
+              field("modifiers", $.function_modifier),
+              field("captures", $.capture_list),
             ),
           ),
         ),
@@ -1098,14 +1064,12 @@ module.exports = grammar({
           "for",
           field("left", $._left_hand_side),
           "in",
-          field("right", commaSep1($._expression_within_for_in_clause)),
+          field("right", commaSep1($.expression)),
           optional(","),
         ),
       ),
 
     if_clause: ($) => seq("if", $.expression),
-
-    _expression_within_for_in_clause: ($) => choice($.expression),
 
     conditional_expression: ($) =>
       prec.right(
