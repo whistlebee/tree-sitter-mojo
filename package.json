@@ -9,7 +9,7 @@
     "mojo",
     "neovim"
   ],
-  "author": "Your Name",
+  "author": "Hyunjin Kim",
   "license": "MIT",
   "dependencies": {
     "node-addon-api": "^8.0.0",

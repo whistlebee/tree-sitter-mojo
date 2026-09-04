@@ -225,9 +225,8 @@ module.exports = grammar({
     abi_effect: ($) => seq("abi", "(", $.string, ")"),
 
     // Parameters (runtime arguments)
-    parameters: ($) => seq("(", optional($._parameters), ")"),
-
-    _parameters: ($) => seq(commaSep1($.parameter), optional(",")),
+    parameters: ($) =>
+      seq("(", optional(seq(commaSep1($.parameter), optional(","))), ")"),
 
     // Parameter with optional argument convention
     parameter: ($) =>
